@@ -21,9 +21,9 @@
       justify-content: center;
       align-items: center;
       position: relative;
-      background: url("https://upload.wikimedia.org/wikipedia/commons/0/0e/Terminal_de_onibus_Pca.das_Bandeiras_01.jpg") no-repeat center center fixed;
-      background-size: cover;
-      filter: brightness(0.75); /* clareia a imagem sem sumir */
+      background: url("Terminal_de_onibus_Pca.das_Bandeiras_01.jpg") no-repeat center center fixed;
+      background-size: cover; /* mantém proporção da imagem */
+      filter: brightness(0.75); /* clareia a imagem */
     }
 
     .container {
@@ -66,6 +66,7 @@
       transform: translateY(-2px);
     }
 
+    /* Ajustes para telas pequenas */
     @media (max-width: 480px) {
       h1 {
         font-size: 20px;
