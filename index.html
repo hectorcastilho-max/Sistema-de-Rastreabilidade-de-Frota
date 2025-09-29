@@ -13,7 +13,7 @@
 
     body {
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: url("https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=1920&q=80") 
+      background: url("https://upload.wikimedia.org/wikipedia/commons/3/3d/Bus_Terminal_in_Salvador.jpg") 
                   no-repeat center center fixed;
       background-size: cover;
       height: 100vh;
@@ -23,19 +23,20 @@
       position: relative;
     }
 
-    /* overlay escuro para dar contraste ao fundo */
+    /* overlay branca quase transparente */
     .overlay {
       position: absolute;
       top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.4);
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.8); /* quanto maior o alfa (0 a 1), mais clara */
     }
 
     .container {
       position: relative;
       z-index: 2;
       padding: 30px 40px;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.95); /* leve destaque sobre overlay */
       border-radius: 16px;
       text-align: center;
       max-width: 350px;
