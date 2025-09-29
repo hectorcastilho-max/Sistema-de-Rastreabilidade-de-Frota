@@ -23,7 +23,7 @@
       position: relative;
     }
 
-    /* Overlay para deixar a imagem mais clara */
+    /* overlay para suavizar a imagem */
     .overlay {
       position: absolute;
       top: 0; left: 0;
@@ -41,21 +41,30 @@
       max-width: 350px;
       width: 90%;
       box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* centraliza dentro do container */
+      gap: 20px;
     }
 
     h1 {
       color: #222;
-      margin-bottom: 25px;
       font-size: 26px;
     }
 
     .menu {
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 12px;
+      width: 100%; /* garante largura igual dos botões */
+      align-items: center; /* centraliza */
     }
 
     .menu a {
+      display: block;
+      width: 100%; /* todos botões do mesmo tamanho */
+      max-width: 250px; /* tamanho fixo elegante */
       text-decoration: none;
       background: #007BFF;
       color: white;
@@ -64,6 +73,7 @@
       font-size: 16px;
       font-weight: bold;
       transition: background 0.3s, transform 0.2s;
+      text-align: center;
     }
 
     .menu a:hover {
