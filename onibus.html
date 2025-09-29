@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>Cadastro de Ônibus</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;background:#f4f6f9;margin:0;padding:20px}
+    .card{max-width:760px;margin:0 auto;background:#fff;border-radius:10px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+    h1{margin:0 0 12px}
+    label{display:block;margin-top:10px;font-weight:600}
+    input{width:100%;padding:8px;margin-top:6px;border-radius:6px;border:1px solid #ccc}
+    button{margin-top:12px;padding:10px 14px;border-radius:8px;border:none;background:#007BFF;color:#fff;cursor:pointer}
+    table{width:100%;border-collapse:collapse;margin-top:16px}
+    th,td{padding:8px;border-bottom:1px solid #eee;text-align:left}
+    .small{font-size:13px;color:#555}
+    a.back{display:inline-block;margin-bottom:10px;color:#007BFF;text-decoration:none}
+    .danger{background:#e63946}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <a class="back" href="index.html">← Voltar</a>
+    <h1>Cadastro de Ônibus</h1>
+
+    <form id="formOnibus">
+      <label>Número do Ônibus</label>
+      <input id="numero" required placeholder="Ex: 3050">
+
+      <label>Placa</label>
+      <input id="placa" required placeholder="Ex: ABC-1234">
+
+      <label>Modelo</label>
+      <input id="modelo" placeholder="Ex: Mercedes-Benz">
+
+      <label>Capacidade</label>
+      <input id="capacidade" type="number" min="1" placeholder="Ex: 45">
+
+      <button type="submit">Salvar Ônibus</button>
+    </form>
+
+    <div id="lista"></div>
+  </div>
+
+  <script>
+    const KEY = 'onibus_list';
+
+    function carregar() {
+      const arr = JSON.parse(localStorage.getItem(KEY) || '[]');
+      renderizar(arr);
+    }
+
+    function renderizar(arr) {
+      const lista = document.getElementById('lista');
+      if (!arr.length) { lista.innerHTML = '<p class="small">Nenhum ônibus cadastrado.</p>'; return; }
+      let html = '<table><thead><tr><th>#</th><th>Número</th><th>Placa</th><th>Modelo</th><th>Capacidade</th><th>Ações</th></tr></thead><tbody>';
+      arr.forEach((o,i) => {
+        html += `<tr>
+          <td>${i+1}</td>
+          <td>${escapeHtml(o.numero)}</td>
+          <td>${escapeHtml(o.placa)}</td>
+          <td>${escapeHtml(o.modelo||'')}</td>
+          <td>${escapeHtml(o.capacidade||'')}</td>
+          <td><button onclick="excluir(${i})" style="padding:6px;border-radius:6px;background:#e63946;color:#fff;border:none;cursor:pointer">Excluir</button></td>
+        </tr>`;
+      });
+      html += '</tbody></table>';
+      lista.innerHTML = html;
+    }
+
+    document.getElementById('formOnibus').addEventListener('submit', function(e){
+      e.preventDefault();
+      const numero = document.getElementById('numero').value.trim();
+      const placa = document.getElementById('placa').value.trim();
+      const modelo = document.getElementById('modelo').value.trim();
+      const capacidade = document.getElementById('capacidade').value.trim();
+      if (!numero || !placa) { alert('Preencha número e placa.'); return; }
+      const arr = JSON.parse(localStorage.getItem(KEY) || '[]');
+      arr.push({numero, placa, modelo, capacidade});
+      localStorage.setItem(KEY, JSON.stringify(arr));
+      this.reset();
+      carregar();
+    });
+
+    function excluir(index) {
+      if (!confirm('Excluir este ônibus?')) return;
+      const arr = JSON.parse(localStorage.getItem(KEY) || '[]');
+      arr.splice(index,1);
+      localStorage.setItem(KEY, JSON.stringify(arr));
+      carregar();
+    }
+
+    function escapeHtml(s) {
+      if (!s) return '';
+      return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[m]));
+    }
+
+    window.excluir = excluir;
+    carregar();
+  </script>
+</body>
+</html>

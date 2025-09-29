@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>Cadastro de Motorista</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;background:#f4f6f9;margin:0;padding:20px}
+    .card{max-width:760px;margin:0 auto;background:#fff;border-radius:10px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+    h1{margin:0 0 12px}
+    label{display:block;margin-top:10px;font-weight:600}
+    input{width:100%;padding:8px;margin-top:6px;border-radius:6px;border:1px solid #ccc}
+    button{margin-top:12px;padding:10px 14px;border-radius:8px;border:none;background:#007BFF;color:#fff;cursor:pointer}
+    table{width:100%;border-collapse:collapse;margin-top:16px}
+    th,td{padding:8px;border-bottom:1px solid #eee;text-align:left}
+    a.back{display:inline-block;margin-bottom:10px;color:#007BFF;text-decoration:none}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <a class="back" href="index.html">← Voltar</a>
+    <h1>Cadastro de Motorista</h1>
+
+    <form id="formMotorista">
+      <label>Nome</label>
+      <input id="nome" required placeholder="Nome completo">
+
+      <label>CPF</label>
+      <input id="cpf" placeholder="000.000.000-00">
+
+      <label>CNH</label>
+      <input id="cnh" placeholder="Número da CNH">
+
+      <label>Telefone</label>
+      <input id="telefone" placeholder="(XX) 9XXXX-XXXX">
+
+      <button type="submit">Salvar Motorista</button>
+    </form>
+
+    <div id="lista"></div>
+  </div>
+
+  <script>
+    const KEY = 'motoristas_list';
+
+    function carregar() {
+      const arr = JSON.parse(localStorage.getItem(KEY) || '[]');
+      renderizar(arr);
+    }
+
+    function renderizar(arr) {
+      const lista = document.getElementById('lista');
+      if (!arr.length) { lista.innerHTML = '<p class="small">Nenhum motorista cadastrado.</p>'; return; }
+      let html = '<table><thead><tr><th>#</th><th>Nome</th><th>CPF</th><th>CNH</th><th>Telefone</th><th>Ações</th></tr></thead><tbody>';
+      arr.forEach((m,i) => {
+        html += `<tr>
+          <td>${i+1}</td>
+          <td>${escapeHtml(m.nome)}</td>
+          <td>${escapeHtml(m.cpf||'')}</td>
+          <td>${escapeHtml(m.cnh||'')}</td>
+          <td>${escapeHtml(m.telefone||'')}</td>
+          <td><button onclick="excluir(${i})" style="padding:6px;border-radius:6px;background:#e63946;color:#fff;border:none;cursor:pointer">Excluir</button></td>
+        </tr>`;
+      });
+      html += '</tbody></table>';
+      lista.innerHTML = html;
+    }
+
+    document.getElementById('formMotorista').addEventListener('submit', function(e){
+      e.preventDefault();
+      const nome = document.getElementById('nome').value.trim();
+      const cpf = document.getElementById('cpf').value.trim();
+      const cnh = document.getElementById('cnh').value.trim();
+      const telefone = document.getElementById('telefone').value.trim();
+      if (!nome) { alert('Preencha o nome.'); return; }
+      const arr = JSON.parse(localStorage.getItem(KEY) || '[]');
+      arr.push({nome, cpf, cnh, telefone});
+      localStorage.setItem(KEY, JSON.stringify(arr));
+      this.reset();
+      carregar();
+    });
+
+    function excluir(index) {
+      if (!confirm('Excluir este motorista?')) return;
+      const arr = JSON.parse(localStorage.getItem(KEY) || '[]');
+      arr.splice(index,1);
+      localStorage.setItem(KEY, JSON.stringify(arr));
+      carregar();
+    }
+
+    function escapeHtml(s) {
+      if (!s) return '';
+      return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[m]));
+    }
+
+    window.excluir = excluir;
+    carregar();
+  </script>
+</body>
+</html>
