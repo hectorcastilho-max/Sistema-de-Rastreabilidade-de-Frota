@@ -18,7 +18,7 @@
     }
 
     body {
-      background: url("WhatsApp-Image-2025-07-25-at-09.33.43-scaled.jpeg") no-repeat center center fixed;
+      background: url("WhatsApp-Image-2025-07-25-at-09.33.43-scaled.jpeg") no-repeat center top fixed;
       background-size: cover; /* cobre toda a tela */
       filter: brightness(0.7); /* imagem mais clara */
       position: relative;
@@ -38,7 +38,7 @@
       position: relative;
       z-index: 2;
       max-width: 400px;
-      margin: 50px auto; /* centraliza horizontalmente */
+      margin: 50px auto;
       padding: 30px 20px;
       background: rgba(255, 255, 255, 0.85);
       border-radius: 16px;
@@ -88,6 +88,13 @@
       transform: translateY(-2px);
     }
 
+    /* Ajuste da imagem em telas menores para evitar cortes */
+    @media (max-width: 768px) {
+      body {
+        background-position: center top;
+      }
+    }
+
     @media (max-width: 480px) {
       .container {
         margin: 30px 10px;
@@ -98,6 +105,9 @@
       }
       input, button {
         font-size: 14px;
+      }
+      body {
+        background-position: center top; /* garante visibilidade no celular */
       }
     }
   </style>
