@@ -5,48 +5,80 @@
   <title>Sistema de Frota</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    /* Reset simples */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f9;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #007BFF, #00C6FF);
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
-      margin: 0;
     }
+
+    .container {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      width: 320px;
+    }
+
     h1 {
-      color: #333;
-      margin-bottom: 20px;
+      color: #222;
+      margin-bottom: 25px;
+      font-size: 24px;
     }
+
     .menu {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      width: 250px;
+      gap: 15px;
     }
+
     a {
+      display: block;
       text-decoration: none;
       background: #007BFF;
       color: white;
       padding: 14px;
-      text-align: center;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 16px;
-      transition: background 0.3s;
+      font-weight: bold;
+      transition: transform 0.2s, background 0.3s;
     }
+
     a:hover {
       background: #0056b3;
+      transform: translateY(-3px);
+    }
+
+    /* Animação de entrada */
+    .container {
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <h1>🚍 Sistema de Frota</h1>
-  <div class="menu">
-    <a href="onibus.html">Cadastro de Ônibus</a>
-    <a href="motorista.html">Cadastro de Motoristas</a>
-    <a href="linha.html">Cadastro de Linhas</a>
-    <a href="rota.html">Cadastro de Rotas</a>
+  <div class="container">
+    <h1>🚍 Sistema de Frota</h1>
+    <div class="menu">
+      <a href="onibus.html">Cadastro de Ônibus</a>
+      <a href="motorista.html">Cadastro de Motoristas</a>
+      <a href="linha.html">Cadastro de Linhas</a>
+      <a href="rota.html">Cadastro de Rotas</a>
+    </div>
   </div>
 </body>
 </html>
