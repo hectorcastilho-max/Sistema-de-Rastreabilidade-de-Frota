@@ -1,102 +1,121 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8">
   <title>Cadastro de Ônibus</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body{font-family:Arial,Helvetica,sans-serif;background:#f4f6f9;margin:0;padding:20px}
-    .card{max-width:760px;margin:0 auto;background:#fff;border-radius:10px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-    h1{margin:0 0 12px}
-    label{display:block;margin-top:10px;font-weight:600}
-    input{width:100%;padding:8px;margin-top:6px;border-radius:6px;border:1px solid #ccc}
-    button{margin-top:12px;padding:10px 14px;border-radius:8px;border:none;background:#007BFF;color:#fff;cursor:pointer}
-    table{width:100%;border-collapse:collapse;margin-top:16px}
-    th,td{padding:8px;border-bottom:1px solid #eee;text-align:left}
-    .small{font-size:13px;color:#555}
-    a.back{display:inline-block;margin-bottom:10px;color:#007BFF;text-decoration:none}
-    .danger{background:#e63946}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: url('20180926_entregaonibus_zl_hb1.jpg') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 8px;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Responsividade */
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+      h1 {
+        font-size: 22px;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <a class="back" href="index.html">← Voltar</a>
+
+  <div class="container">
     <h1>Cadastro de Ônibus</h1>
+    <form>
+      <div class="form-group">
+        <label for="nome">Nome do Ônibus</label>
+        <input type="text" id="nome" name="nome" required>
+      </div>
 
-    <form id="formOnibus">
-      <label>Número do Ônibus</label>
-      <input id="numero" required placeholder="Ex: 3050">
+      <div class="form-group">
+        <label for="linha">Linha</label>
+        <input type="text" id="linha" name="linha" required>
+      </div>
 
-      <label>Placa</label>
-      <input id="placa" required placeholder="Ex: ABC-1234">
+      <div class="form-group">
+        <label for="placa">Placa</label>
+        <input type="text" id="placa" name="placa" required>
+      </div>
 
-      <label>Modelo</label>
-      <input id="modelo" placeholder="Ex: Mercedes-Benz">
+      <div class="form-group">
+        <label for="ano">Ano de Fabricação</label>
+        <input type="number" id="ano" name="ano" required>
+      </div>
 
-      <label>Capacidade</label>
-      <input id="capacidade" type="number" min="1" placeholder="Ex: 45">
+      <div class="form-group">
+        <label for="modelo">Modelo</label>
+        <input type="text" id="modelo" name="modelo" required>
+      </div>
 
-      <button type="submit">Salvar Ônibus</button>
+      <button type="submit">Cadastrar</button>
     </form>
-
-    <div id="lista"></div>
   </div>
 
-  <script>
-    const KEY = 'onibus_list';
-
-    function carregar() {
-      const arr = JSON.parse(localStorage.getItem(KEY) || '[]');
-      renderizar(arr);
-    }
-
-    function renderizar(arr) {
-      const lista = document.getElementById('lista');
-      if (!arr.length) { lista.innerHTML = '<p class="small">Nenhum ônibus cadastrado.</p>'; return; }
-      let html = '<table><thead><tr><th>#</th><th>Número</th><th>Placa</th><th>Modelo</th><th>Capacidade</th><th>Ações</th></tr></thead><tbody>';
-      arr.forEach((o,i) => {
-        html += `<tr>
-          <td>${i+1}</td>
-          <td>${escapeHtml(o.numero)}</td>
-          <td>${escapeHtml(o.placa)}</td>
-          <td>${escapeHtml(o.modelo||'')}</td>
-          <td>${escapeHtml(o.capacidade||'')}</td>
-          <td><button onclick="excluir(${i})" style="padding:6px;border-radius:6px;background:#e63946;color:#fff;border:none;cursor:pointer">Excluir</button></td>
-        </tr>`;
-      });
-      html += '</tbody></table>';
-      lista.innerHTML = html;
-    }
-
-    document.getElementById('formOnibus').addEventListener('submit', function(e){
-      e.preventDefault();
-      const numero = document.getElementById('numero').value.trim();
-      const placa = document.getElementById('placa').value.trim();
-      const modelo = document.getElementById('modelo').value.trim();
-      const capacidade = document.getElementById('capacidade').value.trim();
-      if (!numero || !placa) { alert('Preencha número e placa.'); return; }
-      const arr = JSON.parse(localStorage.getItem(KEY) || '[]');
-      arr.push({numero, placa, modelo, capacidade});
-      localStorage.setItem(KEY, JSON.stringify(arr));
-      this.reset();
-      carregar();
-    });
-
-    function excluir(index) {
-      if (!confirm('Excluir este ônibus?')) return;
-      const arr = JSON.parse(localStorage.getItem(KEY) || '[]');
-      arr.splice(index,1);
-      localStorage.setItem(KEY, JSON.stringify(arr));
-      carregar();
-    }
-
-    function escapeHtml(s) {
-      if (!s) return '';
-      return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[m]));
-    }
-
-    window.excluir = excluir;
-    carregar();
-  </script>
 </body>
 </html>
