@@ -1,95 +1,136 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <title>Cadastro de Linhas</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8">
+  <title>Cadastro de Linha</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body{font-family:Arial,Helvetica,sans-serif;background:#f4f6f9;margin:0;padding:20px}
-    .card{max-width:760px;margin:0 auto;background:#fff;border-radius:10px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-    h1{margin:0 0 12px}
-    label{display:block;margin-top:10px;font-weight:600}
-    input{width:100%;padding:8px;margin-top:6px;border-radius:6px;border:1px solid #ccc}
-    button{margin-top:12px;padding:10px 14px;border-radius:8px;border:none;background:#007BFF;color:#fff;cursor:pointer}
-    table{width:100%;border-collapse:collapse;margin-top:16px}
-    th,td{padding:8px;border-bottom:1px solid #eee;text-align:left}
-    a.back{display:inline-block;margin-bottom:10px;color:#007BFF;text-decoration:none}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: url('IMG_0531.jpeg') no-repeat center center fixed;
+      background-size: contain; /* Mostra a imagem inteira sem cortar */
+      background-color: #000; /* Fundo caso a imagem não preencha */
+      min-height: 100vh;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    /* Camada escura sobre a imagem para contraste */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.4); /* semi-transparente */
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      background: rgba(0, 0, 0, 0.7); /* fundo semi-transparente */
+      padding: 35px;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 25px;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .container { padding: 25px; }
+      h1 { font-size: 24px; }
+      input, select { padding: 10px; font-size: 13px; }
+      button { font-size: 15px; padding: 12px; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 20px; }
+      h1 { font-size: 22px; }
+      input, select { padding: 8px; font-size: 12px; }
+      button { font-size: 14px; padding: 10px; }
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <a class="back" href="index.html">← Voltar</a>
-    <h1>Cadastro de Linhas</h1>
 
-    <form id="formLinha">
-      <label>Código da Linha</label>
-      <input id="codigo" required placeholder="Ex: 101">
+  <div class="container">
+    <h1>Cadastro de Linha de Ônibus</h1>
+    <form>
+      <div class="form-group">
+        <label for="nome">Nome da Linha</label>
+        <input type="text" id="nome" name="nome" required>
+      </div>
 
-      <label>Nome da Linha</label>
-      <input id="nome" required placeholder="Ex: Centro ↔ Bairro X">
+      <div class="form-group">
+        <label for="descricao">Descrição</label>
+        <input type="text" id="descricao" name="descricao" required>
+      </div>
 
-      <label>Tempo estimado (min)</label>
-      <input id="tempo" type="number" min="1" placeholder="Ex: 45">
+      <div class="form-group">
+        <label for="origem">Origem</label>
+        <input type="text" id="origem" name="origem" required>
+      </div>
 
-      <button type="submit">Salvar Linha</button>
+      <div class="form-group">
+        <label for="destino">Destino</label>
+        <input type="text" id="destino" name="destino" required>
+      </div>
+
+      <button type="submit">Cadastrar Linha</button>
     </form>
-
-    <div id="lista"></div>
   </div>
 
-  <script>
-    const KEY = 'linhas_list';
-
-    function carregar() {
-      const arr = JSON.parse(localStorage.getItem(KEY) || '[]');
-      renderizar(arr);
-    }
-
-    function renderizar(arr) {
-      const lista = document.getElementById('lista');
-      if (!arr.length) { lista.innerHTML = '<p class="small">Nenhuma linha cadastrada.</p>'; return; }
-      let html = '<table><thead><tr><th>#</th><th>Código</th><th>Nome</th><th>Tempo (min)</th><th>Ações</th></tr></thead><tbody>';
-      arr.forEach((l,i) => {
-        html += `<tr>
-          <td>${i+1}</td>
-          <td>${escapeHtml(l.codigo)}</td>
-          <td>${escapeHtml(l.nome)}</td>
-          <td>${escapeHtml(l.tempo||'')}</td>
-          <td><button onclick="excluir(${i})" style="padding:6px;border-radius:6px;background:#e63946;color:#fff;border:none;cursor:pointer">Excluir</button></td>
-        </tr>`;
-      });
-      html += '</tbody></table>';
-      lista.innerHTML = html;
-    }
-
-    document.getElementById('formLinha').addEventListener('submit', function(e){
-      e.preventDefault();
-      const codigo = document.getElementById('codigo').value.trim();
-      const nome = document.getElementById('nome').value.trim();
-      const tempo = document.getElementById('tempo').value.trim();
-      if (!codigo || !nome) { alert('Preencha código e nome.'); return; }
-      const arr = JSON.parse(localStorage.getItem(KEY) || '[]');
-      arr.push({codigo, nome, tempo});
-      localStorage.setItem(KEY, JSON.stringify(arr));
-      this.reset();
-      carregar();
-    });
-
-    function excluir(index) {
-      if (!confirm('Excluir esta linha?')) return;
-      const arr = JSON.parse(localStorage.getItem(KEY) || '[]');
-      arr.splice(index,1);
-      localStorage.setItem(KEY, JSON.stringify(arr));
-      carregar();
-    }
-
-    function escapeHtml(s) {
-      if (!s) return '';
-      return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[m]));
-    }
-
-    window.excluir = excluir;
-    carregar();
-  </script>
 </body>
 </html>
