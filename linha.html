@@ -15,7 +15,7 @@
       align-items: center;
       padding: 20px;
       position: relative;
-      background-color: #222; /* cor de fundo complementar */
+      background-color: #222;
     }
 
     /* Imagem de fundo cobrindo toda a tela */
@@ -34,24 +34,25 @@
       position: relative;
       z-index: 1;
       background: rgba(0, 0, 0, 0.7); /* fundo semi-transparente */
-      padding: 35px;
+      padding: 25px 30px;
       border-radius: 15px;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
-      width: 100%;
-      max-width: 600px;
+      width: 50%; /* formulário menor */
+      max-width: 500px;
+      min-width: 300px;
       text-align: center;
       transition: all 0.3s ease;
     }
 
     h1 {
-      font-size: 28px;
-      margin-bottom: 25px;
+      font-size: 24px;
+      margin-bottom: 20px;
       color: #fff;
       text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
     }
 
     .form-group {
-      margin-bottom: 18px;
+      margin-bottom: 15px;
       text-align: left;
     }
 
@@ -64,7 +65,7 @@
 
     input, select {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
       margin-top: 5px;
       border: none;
       border-radius: 8px;
@@ -74,13 +75,13 @@
     button {
       background-color: #007BFF;
       color: white;
-      padding: 14px;
+      padding: 12px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
       width: 100%;
-      margin-top: 20px;
-      font-size: 16px;
+      margin-top: 15px;
+      font-size: 15px;
       font-weight: bold;
       transition: background 0.3s;
     }
@@ -90,18 +91,22 @@
     }
 
     /* Responsividade */
+    @media (max-width: 1024px) {
+      .container { width: 60%; }
+    }
+
     @media (max-width: 768px) {
-      .container { padding: 25px; }
-      h1 { font-size: 24px; }
-      input, select { padding: 10px; font-size: 13px; }
-      button { font-size: 15px; padding: 12px; }
+      .container { width: 70%; padding: 20px; }
+      h1 { font-size: 22px; }
+      input, select { padding: 9px; font-size: 13px; }
+      button { font-size: 14px; padding: 11px; }
     }
 
     @media (max-width: 480px) {
-      .container { padding: 20px; }
-      h1 { font-size: 22px; }
+      .container { width: 90%; padding: 15px; }
+      h1 { font-size: 20px; }
       input, select { padding: 8px; font-size: 12px; }
-      button { font-size: 14px; padding: 10px; }
+      button { font-size: 13px; padding: 10px; }
     }
   </style>
 </head>
@@ -110,7 +115,7 @@
   <!-- Imagem de fundo preenchendo a tela -->
   <img src="IMG_0531.jpeg" alt="Linha de Ônibus" class="bg">
 
-  <!-- Container central -->
+  <!-- Container central menor -->
   <div class="container">
     <h1>Cadastro de Linha de Ônibus</h1>
     <form>
