@@ -1,135 +1,123 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <title>Cadastro de Rotas</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8">
+  <title>Cadastro de Rota</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body{font-family:Arial,Helvetica,sans-serif;background:#f4f6f9;margin:0;padding:20px}
-    .card{max-width:760px;margin:0 auto;background:#fff;border-radius:10px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-    h1{margin:0 0 12px}
-    label{display:block;margin-top:10px;font-weight:600}
-    input, textarea, select{width:100%;padding:8px;margin-top:6px;border-radius:6px;border:1px solid #ccc}
-    textarea{min-height:80px}
-    button{margin-top:12px;padding:10px 14px;border-radius:8px;border:none;background:#007BFF;color:#fff;cursor:pointer}
-    table{width:100%;border-collapse:collapse;margin-top:16px}
-    th,td{padding:8px;border-bottom:1px solid #eee;text-align:left}
-    a.back{display:inline-block;margin-bottom:10px;color:#007BFF;text-decoration:none}
-    .small{font-size:13px;color:#555}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: url('Rotadeonibus.jpg') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.6); /* fundo semi-transparente */
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 25px;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .container { padding: 25px; }
+      h1 { font-size: 24px; }
+      input, select { padding: 10px; font-size: 13px; }
+      button { font-size: 15px; padding: 12px; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 20px; }
+      h1 { font-size: 22px; }
+      input, select { padding: 8px; font-size: 12px; }
+      button { font-size: 14px; padding: 10px; }
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <a class="back" href="index.html">← Voltar</a>
-    <h1>Cadastro de Rotas</h1>
 
-    <form id="formRota">
-      <label>Nome da Rota</label>
-      <input id="nomeRota" required placeholder="Ex: Rota Centro - Bairro X">
-
-      <label>Linha associada</label>
-      <select id="linhaSelect"></select>
-      <div id="linhaFallback" style="display:none">
-        <small class="small">Nenhuma linha cadastrada. Informe o código da linha:</small>
-        <input id="linhaManual" placeholder="Código da linha">
+  <div class="container">
+    <h1>Cadastro de Rota de Ônibus</h1>
+    <form>
+      <div class="form-group">
+        <label for="nome">Nome da Rota</label>
+        <input type="text" id="nome" name="nome" required>
       </div>
 
-      <label>Ponto inicial</label>
-      <input id="pontoInicial" placeholder="Ex: Praça A">
+      <div class="form-group">
+        <label for="linha">Linha</label>
+        <input type="text" id="linha" name="linha" required>
+      </div>
 
-      <label>Ponto final</label>
-      <input id="pontoFinal" placeholder="Ex: Terminal B">
+      <div class="form-group">
+        <label for="pontos">Pontos de Parada</label>
+        <input type="text" id="pontos" name="pontos" required>
+      </div>
 
-      <label>Paradas (separe por vírgula)</label>
-      <textarea id="paradas" placeholder="Parada1, Parada2, Parada3"></textarea>
+      <div class="form-group">
+        <label for="horario">Horário de Funcionamento</label>
+        <input type="text" id="horario" name="horario" required>
+      </div>
 
-      <button type="submit">Salvar Rota</button>
+      <button type="submit">Cadastrar Rota</button>
     </form>
-
-    <div id="lista"></div>
   </div>
 
-  <script>
-    const KEY_ROTAS = 'rotas_list';
-    const KEY_LINHAS = 'linhas_list';
-
-    function carregarLinhas() {
-      const arr = JSON.parse(localStorage.getItem(KEY_LINHAS) || '[]');
-      const sel = document.getElementById('linhaSelect');
-      sel.innerHTML = '';
-      if (!arr.length) {
-        document.getElementById('linhaSelect').style.display = 'none';
-        document.getElementById('linhaFallback').style.display = 'block';
-        return;
-      }
-      document.getElementById('linhaSelect').style.display = 'block';
-      document.getElementById('linhaFallback').style.display = 'none';
-      sel.appendChild(new Option('-- selecione uma linha --',''));
-      arr.forEach(l => {
-        sel.appendChild(new Option(`${l.codigo} — ${l.nome}`, l.codigo));
-      });
-    }
-
-    function carregar() {
-      const arr = JSON.parse(localStorage.getItem(KEY_ROTAS) || '[]');
-      renderizar(arr);
-    }
-
-    function renderizar(arr) {
-      const lista = document.getElementById('lista');
-      if (!arr.length) { lista.innerHTML = '<p class="small">Nenhuma rota cadastrada.</p>'; return; }
-      let html = '<table><thead><tr><th>#</th><th>Nome</th><th>Linha</th><th>Ponto Inicial</th><th>Ponto Final</th><th>Paradas</th><th>Ações</th></tr></thead><tbody>';
-      arr.forEach((r,i) => {
-        html += `<tr>
-          <td>${i+1}</td>
-          <td>${escapeHtml(r.nomeRota)}</td>
-          <td>${escapeHtml(r.linha || '')}</td>
-          <td>${escapeHtml(r.pontoInicial || '')}</td>
-          <td>${escapeHtml(r.pontoFinal || '')}</td>
-          <td>${escapeHtml((r.paradas||[]).join(', '))}</td>
-          <td><button onclick="excluir(${i})" style="padding:6px;border-radius:6px;background:#e63946;color:#fff;border:none;cursor:pointer">Excluir</button></td>
-        </tr>`;
-      });
-      html += '</tbody></table>';
-      lista.innerHTML = html;
-    }
-
-    document.getElementById('formRota').addEventListener('submit', function(e){
-      e.preventDefault();
-      const nomeRota = document.getElementById('nomeRota').value.trim();
-      let linha = '';
-      const sel = document.getElementById('linhaSelect');
-      if (sel && sel.style.display !== 'none') linha = sel.value;
-      if (!linha) linha = document.getElementById('linhaManual').value.trim();
-      const pontoInicial = document.getElementById('pontoInicial').value.trim();
-      const pontoFinal = document.getElementById('pontoFinal').value.trim();
-      const paradas = document.getElementById('paradas').value.split(',').map(s=>s.trim()).filter(Boolean);
-
-      if (!nomeRota) { alert('Preencha o nome da rota.'); return; }
-      const arr = JSON.parse(localStorage.getItem(KEY_ROTAS) || '[]');
-      arr.push({nomeRota, linha, pontoInicial, pontoFinal, paradas});
-      localStorage.setItem(KEY_ROTAS, JSON.stringify(arr));
-      this.reset();
-      carregar();
-      carregarLinhas(); // manter fallback atualizado
-    });
-
-    function excluir(index) {
-      if (!confirm('Excluir esta rota?')) return;
-      const arr = JSON.parse(localStorage.getItem(KEY_ROTAS) || '[]');
-      arr.splice(index,1);
-      localStorage.setItem(KEY_ROTAS, JSON.stringify(arr));
-      carregar();
-    }
-
-    function escapeHtml(s) {
-      if (!s) return '';
-      return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[m]));
-    }
-
-    window.excluir = excluir;
-    carregarLinhas();
-    carregar();
-  </script>
 </body>
 </html>
