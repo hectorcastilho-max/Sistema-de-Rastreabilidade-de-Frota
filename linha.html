@@ -18,14 +18,14 @@
       background-color: #222; /* cor de fundo complementar */
     }
 
-    /* Imagem de fundo como elemento, proporcional e semi-transparente */
+    /* Imagem de fundo cobrindo toda a tela */
     body img.bg {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: contain; /* mantém proporção sem cortar */
+      object-fit: cover; /* preenche toda a tela */
       opacity: 0.6; /* semi-transparente */
       z-index: 0;
     }
@@ -107,7 +107,7 @@
 </head>
 <body>
 
-  <!-- Imagem de fundo -->
+  <!-- Imagem de fundo preenchendo a tela -->
   <img src="IMG_0531.jpeg" alt="Linha de Ônibus" class="bg">
 
   <!-- Container central -->
