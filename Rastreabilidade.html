@@ -1,23 +1,71 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Rastreabilidade de Frota</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background: url("Terminal_de_onibus_Pca.das_Bandeiras_01.jpg") no-repeat center center fixed;
-  background-size: cover;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-h1 { color: #222; background: rgba(255,255,255,0.8); padding: 20px; border-radius: 12px; }
-</style>
+  <meta charset="UTF-8">
+  <title>Rastreabilidade de Frota</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: #222;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    #map {
+      flex: 1;
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
-<h1>📡 Rastreabilidade de Frota</h1>
+  <header>📡 Rastreabilidade de Frota</header>
+  <div id="map"></div>
+
+  <script>
+    function initMap() {
+      // Localização inicial - Praça das Bandeiras (exemplo)
+      const posicaoCentral = { lat: -23.563210, lng: -46.654250 };
+
+      // Cria o mapa centralizado
+      const mapa = new google.maps.Map(document.getElementById("map"), {
+        zoom: 13,
+        center: posicaoCentral,
+      });
+
+      // Frota simulada (exemplo de veículos)
+      const frota = [
+        { lat: -23.563210, lng: -46.654250, titulo: "Ônibus 101 - Linha Centro" },
+        { lat: -23.570500, lng: -46.657800, titulo: "Ônibus 202 - Linha Zona Sul" },
+        { lat: -23.559000, lng: -46.650000, titulo: "Ônibus 303 - Linha Zona Norte" }
+      ];
+
+      // Adiciona os marcadores no mapa
+      frota.forEach(veiculo => {
+        new google.maps.Marker({
+          position: { lat: veiculo.lat, lng: veiculo.lng },
+          map: mapa,
+          title: veiculo.titulo
+        });
+      });
+    }
+  </script>
+
+  <!-- API do Google Maps (substitua YOUR_API_KEY pela sua chave de API) -->
+  <script async 
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+  </script>
 </body>
 </html>
