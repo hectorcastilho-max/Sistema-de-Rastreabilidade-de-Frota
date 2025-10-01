@@ -5,6 +5,9 @@
   <title>Rastreabilidade de Frota</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
   <style>
     html, body { height: 100%; margin: 0; }
     body {
@@ -21,42 +24,36 @@
       font-size: 20px;
       font-weight: bold;
     }
-    #map {
-      flex: 1;
-      width: 100%;
-    }
+    #map { flex: 1; }
   </style>
 </head>
 <body>
   <header>📡 Rastreabilidade de Frota</header>
   <div id="map"></div>
 
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    function initMap() {
-      const posicaoCentral = { lat: -23.563210, lng: -46.654250 };
+    // Inicializa o mapa
+    const map = L.map('map').setView([-23.563210, -46.654250], 13);
 
-      const mapa = new google.maps.Map(document.getElementById("map"), {
-        zoom: 13,
-        center: posicaoCentral,
-      });
+    // Adiciona camada de mapa (OpenStreetMap)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
 
-      const frota = [
-        { lat: -23.563210, lng: -46.654250, titulo: "Ônibus 101 - Linha Centro" },
-        { lat: -23.570500, lng: -46.657800, titulo: "Ônibus 202 - Zona Sul" },
-        { lat: -23.559000, lng: -46.650000, titulo: "Ônibus 303 - Zona Norte" }
-      ];
+    // Frota de ônibus simulada
+    const frota = [
+      { lat: -23.563210, lng: -46.654250, titulo: "Ônibus 101 - Linha Centro" },
+      { lat: -23.570500, lng: -46.657800, titulo: "Ônibus 202 - Zona Sul" },
+      { lat: -23.559000, lng: -46.650000, titulo: "Ônibus 303 - Zona Norte" }
+    ];
 
-      frota.forEach(v => {
-        new google.maps.Marker({
-          position: { lat: v.lat, lng: v.lng },
-          map: mapa,
-          title: v.titulo
-        });
-      });
-    }
+    // Adiciona marcadores
+    frota.forEach(v => {
+      L.marker([v.lat, v.lng]).addTo(map)
+        .bindPopup(v.titulo);
+    });
   </script>
-
-  <!-- Troque YOUR_API_KEY pela sua chave -->
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
 </body>
 </html>
