@@ -2,100 +2,166 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Sistema de Rastreabilidade de Frota</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <title>Sistema de Rastreabilidade de Frotas</title>
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-
+    /* Fundo com imagem */
     body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: url("Terminal_de_onibus_Pca.das_Bandeiras_01.jpg") no-repeat center center fixed;
-      background-size: cover;
-      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      height: 100vh;
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
+      background: url('IMG_0531.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+
+    /* Camada semi-transparente por cima da imagem */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.4); /* escurece a foto */
+      z-index: 0;
+    }
+
+    header {
+      background: rgba(46, 134, 193, 0.85);
+      color: white;
+      text-align: center;
       padding: 20px;
-      color: #fff; /* texto branco sobre a imagem */
+      border-radius: 8px;
     }
 
     .container {
-      padding: 35px 30px;
-      /* fundo transparente, sem camada branca */
-      border-radius: 20px;
-      text-align: center;
-      max-width: 400px;
-      width: 100%;
-      box-shadow: 0 12px 25px rgba(0,0,0,0.5); /* sombra para destacar o menu */
+      max-width: 800px;
+      width: 95%;
+      margin: 30px auto;
+      background: rgba(255,255,255,0.9); /* branco semi-transparente */
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      position: relative;
+      z-index: 1; /* garante que fica acima do overlay */
+    }
+
+    .perfis {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 25px;
+      justify-content: space-around;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
-    h1 { 
-      font-size: 26px;
-      font-weight: 700;
-      text-shadow: 2px 2px 5px rgba(0,0,0,0.7); /* sombra para legibilidade */
-    }
-
-    .menu {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      width: 100%;
-      align-items: center;
-    }
-
-    .menu a {
-      display: block;
-      width: 100%;
-      max-width: 280px;
-      text-decoration: none;
-      background: rgba(0, 123, 255, 0.7); /* azul semi-transparente */
-      color: #fff;
-      padding: 14px;
-      border-radius: 12px;
-      font-size: 16px;
+    .perfis button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      background: #2e86c1;
+      color: white;
       font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .perfis button:hover {
+      background: #1b4f72;
+    }
+
+    .formulario {
+      display: none;
+      margin-top: 20px;
+    }
+
+    nav {
+      background: rgba(17, 118, 100, 0.9);
+      padding: 10px;
+      margin-top: 30px;
+      border-radius: 6px;
       text-align: center;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
 
-    .menu a:hover {
-      background: rgba(0, 86, 179, 0.8);
-      transform: translateY(-3px);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+    nav a {
+      margin: 0 12px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
     }
 
-    /* Responsividade */
-    @media (max-width: 768px) {
-      .container { padding: 30px 20px; }
-      h1 { font-size: 22px; }
-      .menu a { font-size: 15px; padding: 12px; }
-    }
-
-    @media (max-width: 480px) {
-      .container { padding: 25px 15px; }
-      h1 { font-size: 20px; }
-      .menu a { font-size: 14px; padding: 10px; }
+    nav a:hover {
+      text-decoration: underline;
     }
   </style>
+  <script>
+    function mostrarFormulario(tipo) {
+      document.querySelectorAll(".formulario").forEach(f => f.style.display = "none");
+      document.getElementById(tipo).style.display = "block";
+    }
+  </script>
 </head>
 <body>
-
   <div class="container">
-    <h1>🚍 Sistema de Rastreabilidade de Frota</h1>
-    <div class="menu">
-      <a href="onibus.html">🚍 Cadastro de Ônibus</a>
-      <a href="motorista.html">👨‍✈️ Cadastro de Motoristas</a>
-      <a href="linha.html">📍 Cadastro de Linhas</a>
-      <a href="rota.html">➡️ Cadastro de Rotas</a>
-      <a href="rastreabilidade.html">📡 Rastreabilidade de Frota</a>
-    </div>
-  </div>
+    <header>
+      <h1>Sistema de Rastreabilidade de Frotas</h1>
+      <p>Controle de motoristas, funcionários, usuários e veículos</p>
+    </header>
 
+    <h2>Escolha seu perfil</h2>
+    <div class="perfis">
+      <button onclick="mostrarFormulario('motorista')">Motorista</button>
+      <button onclick="mostrarFormulario('funcionario')">Funcionário</button>
+      <button onclick="mostrarFormulario('usuario')">Usuário</button>
+    </div>
+
+    <!-- Formulário Motorista -->
+    <div id="motorista" class="formulario">
+      <h3>Login - Motorista</h3>
+      <form>
+        <label>ID do Motorista:</label><br>
+        <input type="text" name="id_motorista" required><br><br>
+        <label>Senha:</label><br>
+        <input type="password" name="senha_motorista" required><br><br>
+        <button type="submit">Entrar</button>
+      </form>
+    </div>
+
+    <!-- Formulário Funcionário -->
+    <div id="funcionario" class="formulario">
+      <h3>Login - Funcionário</h3>
+      <form>
+        <label>Matrícula:</label><br>
+        <input type="text" name="matricula" required><br><br>
+        <label>Senha:</label><br>
+        <input type="password" name="senha_funcionario" required><br><br>
+        <button type="submit">Entrar</button>
+      </form>
+    </div>
+
+    <!-- Formulário Usuário -->
+    <div id="usuario" class="formulario">
+      <h3>Acesso - Usuário</h3>
+      <form>
+        <label>Email:</label><br>
+        <input type="email" name="email_usuario" required><br><br>
+        <label>Senha:</label><br>
+        <input type="password" name="senha_usuario" required><br><br>
+        <button type="submit">Entrar</button>
+      </form>
+    </div>
+
+    <!-- Menu Inicial -->
+    <nav>
+      <a href="#">Linhas</a>
+      <a href="#">Rotas</a>
+      <a href="#">Motoristas</a>
+      <a href="#">Ônibus</a>
+      <a href="#">Dúvidas Frequentes</a>
+      <a href="#">Ajuda</a>
+    </nav>
+  </div>
 </body>
 </html>
