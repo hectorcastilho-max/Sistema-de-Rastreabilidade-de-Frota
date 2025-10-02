@@ -8,18 +8,18 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: url('Terminal_de_onibus_Pca.das_Bandeiras_01.jpg') no-repeat center center fixed;
-      background-size: cover;
-      position: relative;
       color: #fff;
     }
+
+    /* Fundo geral */
     body::before {
       content: "";
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top:0; left:0; right:0; bottom:0;
       background: rgba(0,0,0,0.4);
       z-index: -1;
     }
+
     header {
       background: rgba(0,0,0,0.5);
       text-align: center;
@@ -27,7 +27,8 @@
       position: relative;
       z-index: 5;
     }
-    header h1 { margin: 0; font-size: 28px; }
+
+    header h1 { margin:0; font-size:28px; }
 
     /* Menu inicial */
     .menu-inicial {
@@ -36,6 +37,8 @@
       gap: 40px;
       margin-top: 50px;
       flex-wrap: wrap;
+      z-index:5;
+      position: relative;
     }
     .menu-inicial button {
       padding: 15px 25px;
@@ -49,13 +52,15 @@
     }
     .menu-inicial button:hover { background: #1a5276; }
 
+    /* Menu lateral inferior direito */
     .menu-lateral {
       position: fixed;
       bottom: 30px;
-      left: 30px;
+      right: 30px;
       display: flex;
       flex-direction: column;
       gap: 10px;
+      z-index: 10;
     }
     .menu-lateral button {
       padding: 10px 15px;
@@ -68,13 +73,15 @@
     }
     .menu-lateral button:hover { background: #1e8449; }
 
-    /* Submenu por perfil */
+    /* Submenus por perfil */
     .submenu {
       display: none;
-      text-align: center;
-      margin-top: 30px;
+      justify-content: center;
       gap: 15px;
+      margin-top: 30px;
       flex-wrap: wrap;
+      z-index: 5;
+      position: relative;
     }
     .submenu button {
       padding: 12px 20px;
@@ -88,57 +95,74 @@
     }
     .submenu button:hover { background: #1b4f72; }
 
-    .container {
+    /* Seções com imagem de fundo específica */
+    section {
       max-width: 800px;
       margin: 40px auto;
-      background: rgba(255,255,255,0.9);
       padding: 20px;
       border-radius: 8px;
       color: #333;
+      background-size: cover;
+      background-position: center;
       position: relative;
-      z-index: 1;
+    }
+    section::before {
+      content:"";
+      position:absolute;
+      top:0; left:0; right:0; bottom:0;
+      background: rgba(255,255,255,0.9);
+      z-index:-1;
+      border-radius:8px;
     }
 
+    /* Botão Voltar ao Topo */
     #topBtn {
-      display: none;
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      z-index: 20;
-      font-size: 18px;
-      border: none;
-      outline: none;
-      background-color: #2e86c1;
-      color: white;
-      cursor: pointer;
-      padding: 12px 18px;
-      border-radius: 50%;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-      transition: background 0.3s;
+      display:none;
+      position:fixed;
+      bottom:30px;
+      left:50%;
+      transform:translateX(50%);
+      z-index:20;
+      font-size:18px;
+      border:none;
+      outline:none;
+      background-color:#2e86c1;
+      color:white;
+      cursor:pointer;
+      padding:12px 18px;
+      border-radius:50%;
+      box-shadow:0 2px 6px rgba(0,0,0,0.3);
+      transition:background 0.3s;
     }
-    #topBtn:hover { background-color: #1a5276; }
+    #topBtn:hover{background-color:#1a5276;}
   </style>
 </head>
 <body>
+
   <header>
     <h1>Sistema de Rastreabilidade de Frota</h1>
-    <p>Escolha seu perfil abaixo</p>
+    <p>Escolha sua opção</p>
   </header>
 
-  <!-- Menu Inicial -->
+  <!-- Menu inicial -->
   <div class="menu-inicial">
     <button onclick="selecionarPerfil('funcionario')">Funcionário</button>
     <button onclick="selecionarPerfil('usuario')">Usuário</button>
-    <button onclick="selecionarPerfil('motorista')">Motorista</button>
+    <button onclick="scrollPara('rastreabilidade')">Rastreabilidade</button>
   </div>
 
-  <!-- Menu lateral -->
+  <!-- Menu lateral inferior direito -->
   <div class="menu-lateral">
-    <button onclick="document.getElementById('duvidas').scrollIntoView({behavior:'smooth'})">Dúvidas</button>
-    <button onclick="document.getElementById('ajuda').scrollIntoView({behavior:'smooth'})">Ajuda</button>
+    <button onclick="scrollPara('duvidas')">Dúvidas</button>
+    <button onclick="scrollPara('ajuda')">Ajuda</button>
   </div>
 
-  <!-- Submenus por perfil -->
+  <!-- Submenus -->
+  <div id="submenu-funcionario" class="submenu">
+    <button onclick="scrollPara('usuario')">Usuário</button>
+    <button onclick="scrollPara('motoristas')">Cadastro de Motorista</button>
+  </div>
+
   <div id="submenu-usuario" class="submenu">
     <button onclick="scrollPara('linhas')">Linhas</button>
     <button onclick="scrollPara('rotas')">Rotas</button>
@@ -146,55 +170,9 @@
     <button onclick="scrollPara('rastreabilidade')">Rastreabilidade</button>
   </div>
 
-  <div id="submenu-motorista" class="submenu">
-    <button onclick="scrollPara('linhas')">Linhas</button>
-    <button onclick="scrollPara('rotas')">Rotas</button>
-    <button onclick="scrollPara('onibus')">Ônibus</button>
-  </div>
-
   <!-- Seções -->
-  <section id="linhas" class="container">
-    <h2>Linhas</h2>
-    <p>Informações das linhas.</p>
-  </section>
-
-  <section id="rotas" class="container">
-    <h2>Rotas</h2>
-    <p>Informações das rotas.</p>
-  </section>
-
-  <section id="onibus" class="container">
-    <h2>Ônibus</h2>
-    <p>Cadastro e informações dos ônibus.</p>
-  </section>
-
-  <section id="rastreabilidade" class="container">
-    <h2>Rastreabilidade</h2>
-    <p>Controle e rastreabilidade de frotas para usuários.</p>
-  </section>
-
-  <section id="motoristas" class="container">
-    <h2>Motoristas</h2>
-    <form>
-      <input type="text" placeholder="Nome do Motorista" required>
-      <input type="text" placeholder="Número da CNH" required>
-      <input type="text" placeholder="Linha Associada">
-      <button type="submit">Enviar</button>
-    </form>
-  </section>
-
-  <section id="funcionarios" class="container">
-    <h2>Funcionários</h2>
-    <form>
-      <input type="text" placeholder="Nome do Funcionário" required>
-      <input type="text" placeholder="Matrícula" required>
-      <input type="text" placeholder="Departamento">
-      <button type="submit">Enviar</button>
-    </form>
-  </section>
-
-  <section id="usuarios" class="container">
-    <h2>Usuários</h2>
+  <section id="usuario" style="background:url('usuario-bg.jpg');">
+    <h2>Usuário</h2>
     <form>
       <input type="text" placeholder="Nome do Usuário" required>
       <input type="email" placeholder="E-mail" required>
@@ -203,35 +181,66 @@
     </form>
   </section>
 
-  <section id="ajuda" class="container">
+  <section id="motoristas" style="background:url('motorista-bg.jpg');">
+    <h2>Cadastro de Motorista</h2>
+    <form>
+      <input type="text" placeholder="Nome do Motorista" required>
+      <input type="text" placeholder="Número da CNH" required>
+      <input type="text" placeholder="Linha Associada">
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
+
+  <section id="linhas" style="background:url('linhas-bg.jpg');">
+    <h2>Linhas</h2>
+    <p>Informações sobre as linhas de ônibus.</p>
+  </section>
+
+  <section id="rotas" style="background:url('rotas-bg.jpg');">
+    <h2>Rotas</h2>
+    <p>Informações sobre as rotas.</p>
+  </section>
+
+  <section id="onibus" style="background:url('onibus-bg.jpg');">
+    <h2>Ônibus</h2>
+    <p>Informações sobre os ônibus.</p>
+  </section>
+
+  <section id="rastreabilidade" style="background:url('Terminal_de_onibus_Pca.das_Bandeiras_01.jpg');">
+    <h2>Rastreabilidade</h2>
+    <p>Aqui você verá o mapa de rastreabilidade da frota.</p>
+    <div id="map" style="width:100%;height:400px;background:#ccc;">Mapa Integrado Aqui</div>
+  </section>
+
+  <section id="ajuda" style="background:url('ajuda-bg.jpg');">
     <h2>Ajuda</h2>
     <p>Suporte e instruções.</p>
   </section>
 
-  <section id="duvidas" class="container">
+  <section id="duvidas" style="background:url('duvidas-bg.jpg');">
     <h2>Dúvidas Frequentes</h2>
     <p>Perguntas comuns e respostas.</p>
   </section>
 
+  <!-- Botão Voltar ao Topo -->
   <button onclick="topFunction()" id="topBtn" title="Voltar ao topo">↑</button>
 
   <script>
-    // Botão Voltar ao Topo
+    // Scroll suave e botão topo
     const topBtn = document.getElementById("topBtn");
-    window.onscroll = function() {
-      if(document.body.scrollTop > 200 || document.documentElement.scrollTop > 200){
-        topBtn.style.display = "block";
-      } else { topBtn.style.display = "none"; }
+    window.onscroll = function(){
+      if(document.body.scrollTop>200 || document.documentElement.scrollTop>200){
+        topBtn.style.display="block";
+      }else{topBtn.style.display="none";}
     }
-    function topFunction(){ window.scrollTo({top:0, behavior:'smooth'}); }
+    function topFunction(){window.scrollTo({top:0,behavior:'smooth'});}
 
-    // Mostrar submenu dependendo do perfil escolhido
+    // Selecionar perfil e mostrar submenu
     function selecionarPerfil(perfil){
-      document.getElementById('submenu-usuario').style.display = 'none';
-      document.getElementById('submenu-motorista').style.display = 'none';
-      if(perfil === 'usuario') document.getElementById('submenu-usuario').style.display = 'flex';
-      if(perfil === 'motorista') document.getElementById('submenu-motorista').style.display = 'flex';
-      // para funcionário, não há submenu específico
+      document.getElementById('submenu-funcionario').style.display='none';
+      document.getElementById('submenu-usuario').style.display='none';
+      if(perfil==='funcionario') document.getElementById('submenu-funcionario').style.display='flex';
+      if(perfil==='usuario') document.getElementById('submenu-usuario').style.display='flex';
     }
 
     function scrollPara(id){
