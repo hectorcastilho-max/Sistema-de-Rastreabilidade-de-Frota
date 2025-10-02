@@ -2,92 +2,54 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Sistema de Rastreabilidade de Frotas</title>
+  <title>Sistema de Rastreabilidade de Frota</title>
   <style>
-    /* Fundo com imagem */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      background: url('IMG_0531.jpeg') no-repeat center center fixed;
-      background-size: cover;
-      position: relative;
+    /* Rolagem suave */
+    html {
+      scroll-behavior: smooth;
     }
 
-    /* Camada semi-transparente por cima da imagem */
+    /* Fundo com a imagem */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('Terminal_de_onibus_Pca.das_Bandeiras_01.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+      color: #fff;
+    }
+
+    /* Camada escura sobre a imagem */
     body::before {
       content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0,0,0,0.4); /* escurece a foto */
-      z-index: 0;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: -1;
     }
 
     header {
-      background: rgba(46, 134, 193, 0.85);
-      color: white;
+      background: rgba(0, 0, 0, 0.7);
       text-align: center;
       padding: 20px;
-      border-radius: 8px;
     }
 
-    .container {
-      max-width: 800px;
-      width: 95%;
-      margin: 30px auto;
-      background: rgba(255,255,255,0.9); /* branco semi-transparente */
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-      position: relative;
-      z-index: 1; /* garante que fica acima do overlay */
-    }
-
-    .perfis {
-      display: flex;
-      justify-content: space-around;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .perfis button {
-      padding: 12px 20px;
-      border: none;
-      border-radius: 6px;
-      background: #2e86c1;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .perfis button:hover {
-      background: #1b4f72;
-    }
-
-    .formulario {
-      display: none;
-      margin-top: 20px;
+    header h1 {
+      margin: 0;
+      font-size: 28px;
     }
 
     nav {
-      background: rgba(17, 118, 100, 0.9);
-      padding: 10px;
-      margin-top: 30px;
-      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.85);
       text-align: center;
+      padding: 10px;
+      position: sticky;
+      top: 0;
     }
 
     nav a {
-      margin: 0 12px;
-      color: white;
+      color: #fff;
+      margin: 0 15px;
       text-decoration: none;
       font-weight: bold;
     }
@@ -95,73 +57,117 @@
     nav a:hover {
       text-decoration: underline;
     }
-  </style>
-  <script>
-    function mostrarFormulario(tipo) {
-      document.querySelectorAll(".formulario").forEach(f => f.style.display = "none");
-      document.getElementById(tipo).style.display = "block";
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 8px;
+      color: #333;
     }
-  </script>
+
+    h2 {
+      margin-top: 0;
+    }
+
+    form input, form select, form button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 8px;
+    }
+
+    form button {
+      background: #2e86c1;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 4px;
+    }
+
+    form button:hover {
+      background: #1a5276;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Sistema de Rastreabilidade de Frotas</h1>
-      <p>Controle de motoristas, funcionários, usuários e veículos</p>
-    </header>
+  <header>
+    <h1>Sistema de Rastreabilidade de Frota</h1>
+    <p>Bem-vindo ao sistema integrado de ônibus</p>
+  </header>
 
-    <h2>Escolha seu perfil</h2>
-    <div class="perfis">
-      <button onclick="mostrarFormulario('motorista')">Motorista</button>
-      <button onclick="mostrarFormulario('funcionario')">Funcionário</button>
-      <button onclick="mostrarFormulario('usuario')">Usuário</button>
-    </div>
+  <nav>
+    <a href="#rotas">Rotas</a>
+    <a href="#linhas">Linhas</a>
+    <a href="#motoristas">Motoristas</a>
+    <a href="#funcionarios">Funcionários</a>
+    <a href="#usuarios">Usuários</a>
+    <a href="#onibus">Ônibus</a>
+    <a href="#ajuda">Ajuda</a>
+    <a href="#duvidas">Dúvidas Frequentes</a>
+  </nav>
 
-    <!-- Formulário Motorista -->
-    <div id="motorista" class="formulario">
-      <h3>Login - Motorista</h3>
-      <form>
-        <label>ID do Motorista:</label><br>
-        <input type="text" name="id_motorista" required><br><br>
-        <label>Senha:</label><br>
-        <input type="password" name="senha_motorista" required><br><br>
-        <button type="submit">Entrar</button>
-      </form>
-    </div>
+  <section id="rotas" class="container">
+    <h2>Rotas</h2>
+    <p>Aqui estarão listadas as rotas disponíveis.</p>
+  </section>
 
-    <!-- Formulário Funcionário -->
-    <div id="funcionario" class="formulario">
-      <h3>Login - Funcionário</h3>
-      <form>
-        <label>Matrícula:</label><br>
-        <input type="text" name="matricula" required><br><br>
-        <label>Senha:</label><br>
-        <input type="password" name="senha_funcionario" required><br><br>
-        <button type="submit">Entrar</button>
-      </form>
-    </div>
+  <section id="linhas" class="container">
+    <h2>Linhas</h2>
+    <p>Aqui estarão listadas as linhas de ônibus.</p>
+  </section>
 
-    <!-- Formulário Usuário -->
-    <div id="usuario" class="formulario">
-      <h3>Acesso - Usuário</h3>
-      <form>
-        <label>Email:</label><br>
-        <input type="email" name="email_usuario" required><br><br>
-        <label>Senha:</label><br>
-        <input type="password" name="senha_usuario" required><br><br>
-        <button type="submit">Entrar</button>
-      </form>
-    </div>
+  <section id="motoristas" class="container">
+    <h2>Formulário - Motorista</h2>
+    <form>
+      <input type="text" placeholder="Nome do Motorista" required>
+      <input type="text" placeholder="Número da CNH" required>
+      <input type="text" placeholder="Linha Associada">
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
 
-    <!-- Menu Inicial -->
-    <nav>
-      <a href="#">Linhas</a>
-      <a href="#">Rotas</a>
-      <a href="#">Motoristas</a>
-      <a href="#">Ônibus</a>
-      <a href="#">Dúvidas Frequentes</a>
-      <a href="#">Ajuda</a>
-    </nav>
-  </div>
+  <section id="funcionarios" class="container">
+    <h2>Formulário - Funcionário</h2>
+    <form>
+      <input type="text" placeholder="Nome do Funcionário" required>
+      <input type="text" placeholder="Matrícula" required>
+      <input type="text" placeholder="Departamento">
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
+
+  <section id="usuarios" class="container">
+    <h2>Formulário - Usuário</h2>
+    <form>
+      <input type="text" placeholder="Nome do Usuário" required>
+      <input type="email" placeholder="E-mail" required>
+      <input type="text" placeholder="Telefone">
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
+
+  <section id="onibus" class="container">
+    <h2>Ônibus</h2>
+    <p>Cadastro e informações dos ônibus da frota.</p>
+    <form>
+      <input type="text" placeholder="Número do Ônibus" required>
+      <input type="text" placeholder="Placa" required>
+      <input type="text" placeholder="Linha Associada">
+      <button type="submit">Cadastrar</button>
+    </form>
+  </section>
+
+  <section id="ajuda" class="container">
+    <h2>Ajuda</h2>
+    <p>Se precisar de suporte, entre em contato com a central de atendimento.</p>
+  </section>
+
+  <section id="duvidas" class="container">
+    <h2>Dúvidas Frequentes</h2>
+    <p>Aqui você encontra respostas para as perguntas mais comuns sobre o sistema.</p>
+  </section>
 </body>
 </html>
