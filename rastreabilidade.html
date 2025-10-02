@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Rastreabilidade de Frota</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 <style>
 body { margin:0; font-family:Arial,sans-serif; }
 header { text-align:center; padding:20px; background:#2e86c1; color:white; }
 header h1 { margin:0; font-size:28px; }
-.map-container { width:100%; height:80vh; }
+#map { width:100%; height:80vh; }
 .duvidas-ajuda { position:fixed; bottom:30px; right:30px; display:flex; flex-direction:column; gap:10px; }
 .duvidas-ajuda button { padding:10px 15px; border-radius:6px; border:none; background:#28b463; color:white; cursor:pointer; }
 section { padding:20px; }
@@ -20,12 +21,7 @@ section { padding:20px; }
 <p>Visualize a frota no Estado de São Paulo</p>
 </header>
 
-<div class="map-container">
-  <iframe
-    src="https://www.google.com/maps/embed?pb=!1m12!1m3!1d14631298.233263305!2d-53.163196!3d-22.080349!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9481fa7c0c8c5f8d%3A0x2f76b7e5f0fce0!2sEstado%20de%20S%C3%A3o%20Paulo!5e0!3m2!1spt-BR!2sbr!4v1696250000000!5m2!1spt-BR!2sbr"
-    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
-  </iframe>
-</div>
+<div id="map"></div>
 
 <div class="duvidas-ajuda">
   <button onclick="scrollPara('duvidas')">Dúvidas</button>
@@ -42,7 +38,17 @@ section { padding:20px; }
 <p>Suporte e instruções.</p>
 </section>
 
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
+// Inicializa o mapa centrado em São Paulo
+var map = L.map('map').setView([-23.55052, -46.633308], 6); // Latitude e longitude do centro do estado e zoom
+
+// Adiciona o mapa do OpenStreetMap
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '© OpenStreetMap'
+}).addTo(map);
+
 function scrollPara(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
 </script>
 
