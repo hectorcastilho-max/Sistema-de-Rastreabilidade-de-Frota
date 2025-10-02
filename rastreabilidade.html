@@ -13,7 +13,7 @@ body::before { content:""; position:fixed; top:0; left:0; right:0; bottom:0;
 header { text-align:center; padding:30px;}
 header h1 { margin:0; font-size:28px; text-shadow:1px 1px 4px #000; }
 section { max-width:900px; margin:20px auto; padding:20px; border-radius:8px; background: rgba(255,255,255,0.9); color:#333; }
-#map { width:100%; height:400px; background:#ccc; display:flex; align-items:center; justify-content:center; margin-bottom:10px; font-size:24px; font-weight:bold; }
+#map { width:100%; height:400px; background:#ccc; display:flex; align-items:center; justify-content:center; margin-bottom:10px; font-size:24px; font-weight:bold; text-align:center;}
 select, button { padding:8px; margin:5px 0; border-radius:6px; border:none; }
 select { width:200px; }
 button { background:#2e86c1; color:white; cursor:pointer; }
@@ -75,7 +75,7 @@ button:hover { background:#1b4f72; }
 </section>
 
 <script>
-// Simula trajetórias diferentes para cada linha
+// Trajetórias simuladas
 const trajetorias = {
   "101": "Linha 101: Terminal A → Rua 1 → Rua 2 → Terminal B",
   "102": "Linha 102: Terminal C → Rua 3 → Rua 4 → Terminal D",
@@ -97,6 +97,17 @@ function atualizarMapa() {
   if(rota) texto += `<br>Rota selecionada: ${rota}`;
   if(onibus) texto += `<br>Ônibus selecionado: ${onibus}`;
   mapa.innerHTML = texto;
+}
+
+// Carrega automaticamente a linha selecionada pelo usuário no cadastro
+window.onload = function() {
+  const usuario = JSON.parse(localStorage.getItem('usuario'));
+  if(usuario && usuario.linha){
+    document.getElementById('linha').value = usuario.linha;
+    document.getElementById('rota').value = usuario.rota;
+    document.getElementById('onibus').value = usuario.onibus;
+    atualizarMapa();
+  }
 }
 
 function scrollPara(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
