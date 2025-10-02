@@ -87,30 +87,15 @@ button:hover { background:#1b4f72; }
 
 <script>
 const form = document.getElementById('formUsuario');
-
 form.addEventListener('submit', function(e){
   e.preventDefault();
-  const nome = document.getElementById('nome').value;
-  const email = document.getElementById('email').value;
-  const telefone = document.getElementById('telefone').value;
-  const linha = document.getElementById('linha').value;
-  const rota = document.getElementById('rota').value;
-  const onibus = document.getElementById('onibus').value;
-  const favoritos = document.getElementById('favoritos').value;
-
-  // Salva os dados no LocalStorage
-  localStorage.setItem('usuario', JSON.stringify({nome,email,telefone,linha,rota,onibus,favoritos}));
-
   const resumo = document.getElementById('resumo');
-  resumo.innerHTML = `<h3>Cadastro salvo!</h3>
-                      <p><strong>Nome:</strong> ${nome}</p>
-                      <p><strong>E-mail:</strong> ${email}</p>
-                      <p><strong>Telefone:</strong> ${telefone}</p>
-                      <p><strong>Transporte:</strong> Linha ${linha}, Rota ${rota}, Ônibus ${onibus}</p>
-                      <p><strong>Favoritos:</strong> ${favoritos}</p>
-                      <p>Acesse <a href="rastreabilidade.html">Rastreabilidade</a> para ver sua linha no mapa.</p>`;
+  resumo.innerHTML = `<h3>Cadastro do usuário salvo! (Simulação visual)</h3>
+                      <p>Linha: ${document.getElementById('linha').value}</p>
+                      <p>Rota: ${document.getElementById('rota').value}</p>
+                      <p>Ônibus: ${document.getElementById('onibus').value}</p>
+                      <p>Favoritos: ${document.getElementById('favoritos').value}</p>`;
 });
-
 function scrollPara(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
 </script>
 
