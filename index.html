@@ -4,12 +4,10 @@
   <meta charset="UTF-8">
   <title>Sistema de Rastreabilidade de Frota</title>
   <style>
-    /* Rolagem suave */
     html {
       scroll-behavior: smooth;
     }
 
-    /* Fundo com a imagem */
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -19,7 +17,6 @@
       color: #fff;
     }
 
-    /* Camada escura sobre a imagem */
     body::before {
       content: "";
       position: fixed;
@@ -29,9 +26,11 @@
     }
 
     header {
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.5); /* leve transparência */
       text-align: center;
       padding: 20px;
+      position: relative;
+      z-index: 5;
     }
 
     header h1 {
@@ -40,11 +39,14 @@
     }
 
     nav {
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(0, 0, 0, 0.35); /* transparente sobre a imagem */
       text-align: center;
       padding: 10px;
-      position: sticky;
+      position: fixed;
       top: 0;
+      width: 100%;
+      z-index: 10;
+      backdrop-filter: blur(5px); /* deixa o fundo mais legível */
     }
 
     nav a {
@@ -60,11 +62,13 @@
 
     .container {
       max-width: 800px;
-      margin: 40px auto;
+      margin: 120px auto 40px; /* espaço superior para o menu fixo */
       background: rgba(255, 255, 255, 0.9);
       padding: 20px;
       border-radius: 8px;
       color: #333;
+      position: relative;
+      z-index: 1;
     }
 
     h2 {
@@ -90,9 +94,32 @@
     form button:hover {
       background: #1a5276;
     }
+
+    #topBtn {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 20;
+      font-size: 18px;
+      border: none;
+      outline: none;
+      background-color: #2e86c1;
+      color: white;
+      cursor: pointer;
+      padding: 12px 18px;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      transition: background 0.3s;
+    }
+
+    #topBtn:hover {
+      background-color: #1a5276;
+    }
   </style>
 </head>
 <body>
+
   <header>
     <h1>Sistema de Rastreabilidade de Frota</h1>
     <p>Bem-vindo ao sistema integrado de ônibus</p>
@@ -169,5 +196,24 @@
     <h2>Dúvidas Frequentes</h2>
     <p>Aqui você encontra respostas para as perguntas mais comuns sobre o sistema.</p>
   </section>
+
+  <!-- Botão Voltar ao Topo -->
+  <button onclick="topFunction()" id="topBtn" title="Voltar ao topo">↑</button>
+
+  <script>
+    const topBtn = document.getElementById("topBtn");
+    window.onscroll = function() {
+      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+        topBtn.style.display = "block";
+      } else {
+        topBtn.style.display = "none";
+      }
+    };
+
+    function topFunction() {
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+  </script>
+
 </body>
 </html>
