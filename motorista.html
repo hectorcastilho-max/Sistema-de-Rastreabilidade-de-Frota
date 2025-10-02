@@ -6,11 +6,17 @@
 <style>
 body {
   margin:0; font-family:Arial,sans-serif;
-  background: url('motorista-bg.jpg') no-repeat center center fixed;
+  background: url('WhatsApp-Image-2025-07-25-at-09.33.43-scaled.jpeg') no-repeat center center fixed;
   background-size: cover;
   color:#fff;
 }
-body::before { content:""; position:fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.3); z-index:-1; }
+body::before { 
+  content:""; 
+  position:fixed; 
+  top:0; left:0; right:0; bottom:0; 
+  background: rgba(0,0,0,0.3); /* semi-transparência para destacar formulário */
+  z-index:-1; 
+}
 header { text-align:center; padding:30px;}
 header h1 { margin:0; font-size:28px; }
 section { max-width:500px; margin:50px auto; padding:20px; border-radius:8px; background: rgba(255,255,255,0.9); color:#333; }
@@ -33,7 +39,7 @@ button:hover { background:#1b4f72; }
 </header>
 
 <section>
-<form id="formMotorista" action="processa_motorista.php" method="POST">
+<form id="formMotorista">
   <input type="text" id="nome" name="nome" placeholder="Nome" required>
   <input type="email" id="email" name="email" placeholder="E-mail" required>
   <input type="text" id="telefone" name="telefone" placeholder="Telefone">
@@ -58,6 +64,11 @@ button:hover { background:#1b4f72; }
 </section>
 
 <script>
+const form = document.getElementById('formMotorista');
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+  alert("Cadastro do motorista salvo! (Simulação visual)");
+});
 function scrollPara(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
 </script>
 
