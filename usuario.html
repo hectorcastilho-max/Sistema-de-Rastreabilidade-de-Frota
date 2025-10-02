@@ -6,14 +6,13 @@
   <style>
     html { scroll-behavior: smooth; }
     body {
-      margin: 0;
+      margin:0;
       font-family: Arial, sans-serif;
       background: url('usuario-bg.jpg') no-repeat center center fixed;
       background-size: cover;
       color: #fff;
       position: relative;
     }
-
     body::before {
       content:"";
       position: fixed;
@@ -21,67 +20,38 @@
       background: rgba(0,0,0,0.3);
       z-index: -1;
     }
-
-    header {
-      text-align: center;
-      padding: 30px 20px;
-    }
-
-    header h1 { margin:0; font-size:28px; }
-
-    /* Menu interno do Usuário */
-    .menu-usuario {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-
-    .menu-usuario button {
-      padding: 15px 25px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: none;
-      background: #2e86c1;
-      color: white;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .menu-usuario button:hover { background: #1b4f72; }
-
+    header { text-align:center; padding:30px;}
+    header h1 { margin:0; font-size:28px;}
     section {
-      max-width: 800px;
-      margin: 40px auto;
+      max-width: 900px;
+      margin: 20px auto;
       padding: 20px;
-      border-radius: 8px;
+      border-radius:8px;
       background: rgba(255,255,255,0.9);
-      color: #333;
-      position: relative;
+      color:#333;
     }
+    input, select { width:100%; padding:8px; margin:5px 0; }
+    button { padding:10px 15px; margin-top:10px; border:none; border-radius:6px; background:#2e86c1; color:white; cursor:pointer; }
+    button:hover { background:#1b4f72; }
 
-    /* Dúvidas e Ajuda fixos no canto esquerdo */
     .duvidas-ajuda {
-      position: fixed;
-      bottom: 30px;
-      left: 30px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      z-index: 10;
+      position:fixed;
+      bottom:30px;
+      left:30px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      z-index:10;
     }
     .duvidas-ajuda button {
-      padding: 10px 15px;
-      border-radius: 6px;
-      border: none;
-      background: #28b463;
-      color: white;
-      cursor: pointer;
-      transition: background 0.3s;
+      padding:10px 15px;
+      border-radius:6px;
+      border:none;
+      background:#28b463;
+      color:white;
+      cursor:pointer;
     }
-    .duvidas-ajuda button:hover { background: #1e8449; }
 
-    /* Botão voltar ao topo */
     #topBtn {
       display:none;
       position:fixed;
@@ -96,72 +66,135 @@
       cursor:pointer;
       padding:12px 18px;
       border-radius:50%;
-      box-shadow:0 2px 6px rgba(0,0,0,0.3);
-      transition:background 0.3s;
     }
+
     #topBtn:hover { background-color:#1a5276; }
+
+    /* Resultado do cadastro */
+    #resumo { margin-top:20px; padding:10px; background:#dcdcdc; color:#333; border-radius:6px; }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>Usuário - Sistema de Rastreabilidade</h1>
-    <p>Escolha uma opção ou preencha seu cadastro abaixo</p>
-  </header>
+<header>
+  <h1>Usuário - Sistema de Rastreabilidade</h1>
+  <p>Cadastre-se e selecione seu transporte do dia a dia</p>
+</header>
 
-  <!-- Menu interno do Usuário -->
-  <div class="menu-usuario">
-    <button onclick="window.location.href='linha.html'">Linhas</button>
-    <button onclick="window.location.href='rota.html'">Rotas</button>
-    <button onclick="window.location.href='onibus.html'">Ônibus</button>
-    <button onclick="window.location.href='rastreabilidade.html'">Rastreabilidade</button>
+<section id="cadastro-usuario">
+  <h2>Cadastro de Usuário</h2>
+  <form id="formUsuario">
+    <input type="text" id="nome" placeholder="Nome" required>
+    <input type="email" id="email" placeholder="E-mail" required>
+    <input type="text" id="telefone" placeholder="Telefone">
+    <input type="password" id="senha" placeholder="Senha" required>
+
+    <h3>Selecione seu transporte do dia</h3>
+    <label>Linha:</label>
+    <select id="linha">
+      <option value="">--Selecione--</option>
+      <option value="Linha 101">Linha 101</option>
+      <option value="Linha 102">Linha 102</option>
+      <option value="Linha 103">Linha 103</option>
+    </select>
+
+    <label>Rota:</label>
+    <select id="rota">
+      <option value="">--Selecione--</option>
+      <option value="Rota A">Rota A</option>
+      <option value="Rota B">Rota B</option>
+      <option value="Rota C">Rota C</option>
+    </select>
+
+    <label>Ônibus:</label>
+    <select id="onibus">
+      <option value="">--Selecione--</option>
+      <option value="Ônibus 1">Ônibus 1</option>
+      <option value="Ônibus 2">Ônibus 2</option>
+      <option value="Ônibus 3">Ônibus 3</option>
+    </select>
+
+    <h3>Favoritos</h3>
+    <input type="checkbox" id="favLinha" value="Linha"> Linha favorita<br>
+    <input type="checkbox" id="favRota" value="Rota"> Rota favorita<br>
+    <input type="checkbox" id="favOnibus" value="Ônibus"> Ônibus favorito<br>
+
+    <button type="submit">Salvar</button>
+  </form>
+
+  <div id="resumo"></div>
+</section>
+
+<section id="rastreabilidade">
+  <h2>Rastreabilidade</h2>
+  <div id="map" style="width:100%;height:300px;background:#ccc;display:flex;align-items:center;justify-content:center;">
+    Mapa Integrado Aqui
   </div>
-
-  <!-- Formulário do usuário -->
-  <section id="cadastro-usuario">
-    <h2>Cadastro de Usuário</h2>
-    <form>
-      <input type="text" placeholder="Nome" required style="width:100%;margin:5px 0;padding:8px;">
-      <input type="email" placeholder="E-mail" required style="width:100%;margin:5px 0;padding:8px;">
-      <input type="text" placeholder="Telefone" style="width:100%;margin:5px 0;padding:8px;">
-      <button type="submit" style="margin-top:10px;padding:10px 20px;background:#2e86c1;color:white;border:none;border-radius:6px;cursor:pointer;">Enviar</button>
-    </form>
-  </section>
-
-  <!-- Dúvidas e Ajuda -->
-  <div class="duvidas-ajuda">
-    <button onclick="scrollPara('duvidas')">Dúvidas</button>
-    <button onclick="scrollPara('ajuda')">Ajuda</button>
+  <div id="horarios" style="margin-top:10px;background:#eee;color:#333;padding:10px;border-radius:6px;">
+    Horários dos ônibus aparecerão aqui
   </div>
+</section>
 
-  <!-- Seções Dúvidas e Ajuda -->
-  <section id="duvidas">
-    <h2>Dúvidas Frequentes</h2>
-    <p>Perguntas comuns e respostas.</p>
-  </section>
+<div class="duvidas-ajuda">
+  <button onclick="scrollPara('duvidas')">Dúvidas</button>
+  <button onclick="scrollPara('ajuda')">Ajuda</button>
+</div>
 
-  <section id="ajuda">
-    <h2>Ajuda</h2>
-    <p>Suporte e instruções.</p>
-  </section>
+<section id="duvidas">
+  <h2>Dúvidas Frequentes</h2>
+  <p>Perguntas comuns e respostas.</p>
+</section>
 
-  <!-- Botão voltar ao topo -->
-  <button onclick="topFunction()" id="topBtn" title="Voltar ao topo">↑</button>
+<section id="ajuda">
+  <h2>Ajuda</h2>
+  <p>Suporte e instruções.</p>
+</section>
 
-  <script>
-    // Scroll e botão topo
-    const topBtn = document.getElementById("topBtn");
-    window.onscroll = function(){
-      if(document.body.scrollTop>200 || document.documentElement.scrollTop>200){
-        topBtn.style.display="block";
-      }else{topBtn.style.display="none";}
-    }
-    function topFunction(){window.scrollTo({top:0,behavior:'smooth'});}
+<button onclick="topFunction()" id="topBtn">↑</button>
 
-    function scrollPara(id){
-      document.getElementById(id).scrollIntoView({behavior:'smooth'});
-    }
-  </script>
+<script>
+  const topBtn = document.getElementById("topBtn");
+  window.onscroll = function(){
+    if(document.body.scrollTop>200 || document.documentElement.scrollTop>200){
+      topBtn.style.display="block";
+    }else{topBtn.style.display="none";}
+  }
+  function topFunction(){ window.scrollTo({top:0,behavior:'smooth'}); }
+  function scrollPara(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
+
+  // Lógica do cadastro e atualização de rastreabilidade
+  const form = document.getElementById('formUsuario');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const nome = document.getElementById('nome').value;
+    const email = document.getElementById('email').value;
+    const telefone = document.getElementById('telefone').value;
+    const linha = document.getElementById('linha').value;
+    const rota = document.getElementById('rota').value;
+    const onibus = document.getElementById('onibus').value;
+    const favLinha = document.getElementById('favLinha').checked ? linha : '';
+    const favRota = document.getElementById('favRota').checked ? rota : '';
+    const favOnibus = document.getElementById('favOnibus').checked ? onibus : '';
+
+    // Mostrar resumo
+    const resumo = document.getElementById('resumo');
+    resumo.innerHTML = `<h3>Cadastro salvo!</h3>
+                        <p><strong>Nome:</strong> ${nome}</p>
+                        <p><strong>E-mail:</strong> ${email}</p>
+                        <p><strong>Telefone:</strong> ${telefone}</p>
+                        <p><strong>Transporte do dia:</strong> Linha ${linha}, Rota ${rota}, Ônibus ${onibus}</p>
+                        <p><strong>Favoritos:</strong> ${favLinha} ${favRota} ${favOnibus}</p>`;
+
+    // Atualizar Rastreabilidade
+    const horarios = document.getElementById('horarios');
+    horarios.innerHTML = `<p>Exibindo horários e trajetórias para:</p>
+                          <ul>
+                            <li>Linha: ${linha}</li>
+                            <li>Rota: ${rota}</li>
+                            <li>Ônibus: ${onibus}</li>
+                          </ul>`;
+  });
+</script>
 
 </body>
 </html>
