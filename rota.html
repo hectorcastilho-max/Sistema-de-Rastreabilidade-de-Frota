@@ -2,135 +2,56 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Cadastro de Rota</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rotas - Sistema de Rastreabilidade</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: url('Rotadeonibus.jpg') no-repeat center center fixed;
-      background-size: contain; /* Ajusta a imagem inteira, sem cortar */
-      background-color: #000; /* cor de fundo se houver espaço */
-      min-height: 100vh;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      position: relative;
-    }
-
-    /* Camada escura sobre a imagem para contraste */
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background-color: rgba(0,0,0,0.4); /* semi-transparente leve */
-      z-index: 0;
-    }
-
-    .container {
-      position: relative;
-      z-index: 1;
-      background: rgba(0, 0, 0, 0.6); /* fundo semi-transparente */
-      padding: 35px;
-      border-radius: 15px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
-      width: 100%;
-      max-width: 600px;
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-
-    h1 {
-      font-size: 28px;
-      margin-bottom: 25px;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
-    }
-
-    .form-group {
-      margin-bottom: 18px;
-      text-align: left;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 12px;
-      margin-top: 5px;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-
-    button {
-      background-color: #007BFF;
-      color: white;
-      padding: 14px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      width: 100%;
-      margin-top: 20px;
-      font-size: 16px;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    /* Responsividade */
-    @media (max-width: 768px) {
-      .container { padding: 25px; }
-      h1 { font-size: 24px; }
-      input, select { padding: 10px; font-size: 13px; }
-      button { font-size: 15px; padding: 12px; }
-    }
-
-    @media (max-width: 480px) {
-      .container { padding: 20px; }
-      h1 { font-size: 22px; }
-      input, select { padding: 8px; font-size: 12px; }
-      button { font-size: 14px; padding: 10px; }
-    }
+    html { scroll-behavior: smooth; }
+    body { margin:0; font-family:Arial,sans-serif; background:url('rota-bg.jpg') no-repeat center center fixed; background-size:cover; color:#fff; position:relative;}
+    body::before { content:""; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.3); z-index:-1;}
+    header { text-align:center; padding:30px;}
+    header h1 { margin:0; font-size:28px;}
+    section { max-width:900px; margin:30px auto; padding:20px; border-radius:8px; background:rgba(255,255,255,0.9); color:#333;}
+    .duvidas-ajuda { position:fixed; bottom:30px; left:30px; display:flex; flex-direction:column; gap:10px; z-index:10;}
+    .duvidas-ajuda button { padding:10px 15px; border-radius:6px; border:none; background:#28b463; color:white; cursor:pointer;}
+    #topBtn { display:none; position:fixed; bottom:30px; right:30px; z-index:20; font-size:18px; border:none; outline:none; background-color:#2e86c1; color:white; cursor:pointer; padding:12px 18px; border-radius:50%;}
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>Cadastro de Rota de Ônibus</h1>
-    <form>
-      <div class="form-group">
-        <label for="nome">Nome da Rota</label>
-        <input type="text" id="nome" name="nome" required>
-      </div>
+<header>
+  <h1>Rotas de Ônibus</h1>
+</header>
 
-      <div class="form-group">
-        <label for="linha">Linha</label>
-        <input type="text" id="linha" name="linha" required>
-      </div>
+<section id="conteudo-rotas">
+  <p>Insira aqui seu código ou tabela de Rotas existentes.</p>
+</section>
 
-      <div class="form-group">
-        <label for="pontos">Pontos de Parada</label>
-        <input type="text" id="pontos" name="pontos" required>
-      </div>
+<div class="duvidas-ajuda">
+  <button onclick="scrollPara('duvidas')">Dúvidas</button>
+  <button onclick="scrollPara('ajuda')">Ajuda</button>
+</div>
 
-      <div class="form-group">
-        <label for="horario">Horário de Funcionamento</label>
-        <input type="text" id="horario" name="horario" required>
-      </div>
+<section id="duvidas">
+  <h2>Dúvidas Frequentes</h2>
+  <p>Perguntas comuns e respostas.</p>
+</section>
 
-      <button type="submit">Cadastrar Rota</button>
-    </form>
-  </div>
+<section id="ajuda">
+  <h2>Ajuda</h2>
+  <p>Suporte e instruções.</p>
+</section>
+
+<button onclick="topFunction()" id="topBtn">↑</button>
+
+<script>
+const topBtn = document.getElementById("topBtn");
+window.onscroll = function(){
+  if(document.body.scrollTop>200 || document.documentElement.scrollTop>200){
+    topBtn.style.display="block";
+  }else{topBtn.style.display="none";}
+}
+function topFunction(){window.scrollTo({top:0,behavior:'smooth'});}
+function scrollPara(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
+</script>
 
 </body>
 </html>
