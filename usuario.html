@@ -2,62 +2,41 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Usuário - Sistema de Rastreabilidade</title>
+<title>Cadastro Usuário</title>
 <style>
-html { scroll-behavior: smooth; }
-body {
-  margin:0; font-family:Arial,sans-serif;
-  background: url('usuario-bg.jpg') no-repeat center center fixed;
-  background-size: cover; color:#fff; position: relative;
+body { margin:0; font-family:Arial,sans-serif;
+  background: url('usuario-bg.jpg') no-repeat center center fixed; background-size:cover; color:#fff;
 }
 body::before { content:""; position:fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.3); z-index:-1; }
 header { text-align:center; padding:30px;}
-header h1 { margin:0; font-size:28px;}
-section { max-width:900px; margin:20px auto; padding:20px; border-radius:8px; background: rgba(255,255,255,0.9); color:#333;}
+header h1 { margin:0; font-size:28px; }
+section { max-width:500px; margin:50px auto; padding:20px; border-radius:8px; background: rgba(255,255,255,0.9); color:#333; }
 input, select { width:100%; padding:8px; margin:5px 0; }
 button { padding:10px 15px; margin-top:10px; border:none; border-radius:6px; background:#2e86c1; color:white; cursor:pointer; }
 button:hover { background:#1b4f72; }
-
 .duvidas-ajuda {
-  position:fixed;
-  bottom:30px;
-  right:30px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  z-index:10;
+  position:fixed; bottom:30px; right:30px; display:flex; flex-direction:column; gap:10px;
 }
 .duvidas-ajuda button {
-  padding:10px 15px;
-  border-radius:6px;
-  border:none;
-  background:#28b463;
-  color:white;
-  cursor:pointer;
+  padding:10px 15px; border-radius:6px; border:none; background:#28b463; color:white; cursor:pointer;
 }
-
-#topBtn { display:none; position:fixed; bottom:80px; right:30px; z-index:20; font-size:18px; border:none; outline:none; background-color:#2e86c1; color:white; cursor:pointer; padding:12px 18px; border-radius:50%; }
-#topBtn:hover { background-color:#1a5276; }
-
 #resumo { margin-top:20px; padding:10px; background:#dcdcdc; color:#333; border-radius:6px; }
 </style>
 </head>
 <body>
 
 <header>
-<h1>Usuário - Sistema de Rastreabilidade</h1>
-<p>Cadastre-se e selecione seu transporte do dia a dia</p>
+<h1>Cadastro Usuário</h1>
+<p>Preencha seus dados e selecione seu transporte</p>
 </header>
 
-<section id="cadastro-usuario">
-<h2>Cadastro de Usuário</h2>
+<section>
 <form id="formUsuario" action="processa_usuario.php" method="POST">
   <input type="text" id="nome" name="nome" placeholder="Nome" required>
   <input type="email" id="email" name="email" placeholder="E-mail" required>
   <input type="text" id="telefone" name="telefone" placeholder="Telefone">
   <input type="password" id="senha" name="senha" placeholder="Senha" required>
 
-  <h3>Selecione seu transporte do dia</h3>
   <label>Linha:</label>
   <select id="linha" name="linha">
     <option value="">--Selecione--</option>
@@ -82,20 +61,13 @@ button:hover { background:#1b4f72; }
     <option value="Ônibus 3">Ônibus 3</option>
   </select>
 
+  <label>Favoritos:</label>
+  <input type="text" id="favoritos" name="favoritos" placeholder="Digite seus favoritos">
+
   <button type="submit">Salvar</button>
 </form>
 
 <div id="resumo"></div>
-</section>
-
-<section id="rastreabilidade">
-<h2>Rastreabilidade</h2>
-<div id="map" style="width:100%;height:300px;background:#ccc;display:flex;align-items:center;justify-content:center;">
-Mapa Integrado Aqui
-</div>
-<div id="horarios" style="margin-top:10px;background:#eee;color:#333;padding:10px;border-radius:6px;">
-Horários e trajetórias aparecerão aqui
-</div>
 </section>
 
 <div class="duvidas-ajuda">
@@ -113,48 +85,28 @@ Horários e trajetórias aparecerão aqui
 <p>Suporte e instruções.</p>
 </section>
 
-<button onclick="topFunction()" id="topBtn">↑</button>
-
 <script>
-// botão voltar ao topo
-const topBtn = document.getElementById("topBtn");
-window.onscroll = function(){
-  if(document.body.scrollTop>200 || document.documentElement.scrollTop>200){
-    topBtn.style.display="block";
-  }else{topBtn.style.display="none";}
-}
-function topFunction(){ window.scrollTo({top:0,behavior:'smooth'});}
-function scrollPara(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
-
-// preview local (resumo e rastreabilidade)
+// Preview local do cadastro
 const form = document.getElementById('formUsuario');
 form.addEventListener('submit', function(e){
   e.preventDefault();
+  const resumo = document.getElementById('resumo');
   const nome = document.getElementById('nome').value;
   const email = document.getElementById('email').value;
   const telefone = document.getElementById('telefone').value;
   const linha = document.getElementById('linha').value;
   const rota = document.getElementById('rota').value;
   const onibus = document.getElementById('onibus').value;
+  const favoritos = document.getElementById('favoritos').value;
 
-  const resumo = document.getElementById('resumo');
-  resumo.innerHTML = `<h3>Cadastro (local) salvo!</h3>
+  resumo.innerHTML = `<h3>Cadastro salvo!</h3>
                       <p><strong>Nome:</strong> ${nome}</p>
                       <p><strong>E-mail:</strong> ${email}</p>
                       <p><strong>Telefone:</strong> ${telefone}</p>
-                      <p><strong>Transporte do dia:</strong> Linha ${linha}, Rota ${rota}, Ônibus ${onibus}</p>`;
-
-  const horarios = document.getElementById('horarios');
-  horarios.innerHTML = `<p>Exibindo horários e trajetórias para:</p>
-                        <ul>
-                          <li>Linha: ${linha}</li>
-                          <li>Rota: ${rota}</li>
-                          <li>Ônibus: ${onibus}</li>
-                        </ul>`;
-
-  // Se tiver backend real, descomente a linha abaixo
-  // form.submit();
+                      <p><strong>Transporte:</strong> Linha ${linha}, Rota ${rota}, Ônibus ${onibus}</p>
+                      <p><strong>Favoritos:</strong> ${favoritos}</p>`;
 });
+function scrollPara(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
 </script>
 
 </body>
