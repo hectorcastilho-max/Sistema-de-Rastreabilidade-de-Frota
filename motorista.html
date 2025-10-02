@@ -2,138 +2,168 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Cadastro de Motoristas</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Motorista - Sistema de Rastreabilidade</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html, body {
-      height: 100%;
-      width: 100%;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    }
-
+    html { scroll-behavior: smooth; }
     body {
-      background: url("WhatsApp-Image-2025-07-25-at-09.33.43-scaled.jpeg") no-repeat center top fixed;
-      background-size: cover; /* cobre toda a tela */
-      filter: brightness(0.7); /* imagem mais clara */
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('motorista-bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
       position: relative;
     }
 
-    .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(255, 255, 255, 0.3); /* camada clara para contraste */
-      z-index: 1;
+    body::before {
+      content:"";
+      position: fixed;
+      top:0; left:0; right:0; bottom:0;
+      background: rgba(0,0,0,0.3);
+      z-index: -1;
     }
 
-    .container {
-      position: relative;
-      z-index: 2;
-      max-width: 400px;
-      margin: 50px auto;
-      padding: 30px 20px;
-      background: rgba(255, 255, 255, 0.85);
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    }
-
-    h1 {
+    header {
       text-align: center;
-      color: #222;
-      margin-bottom: 20px;
-      font-size: 24px;
+      padding: 30px 20px;
     }
 
-    form {
+    header h1 { margin:0; font-size:28px; }
+
+    /* Menu interno do Motorista */
+    .menu-motorista {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .menu-motorista button {
+      padding: 15px 25px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      background: #2e86c1;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .menu-motorista button:hover { background: #1b4f72; }
+
+    section {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.9);
+      color: #333;
+      position: relative;
+    }
+
+    /* Dúvidas e Ajuda fixos no canto esquerdo */
+    .duvidas-ajuda {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 10px;
+      z-index: 10;
     }
-
-    label {
-      font-weight: bold;
-      color: #222;
-    }
-
-    input {
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-      width: 100%;
-    }
-
-    button {
-      padding: 12px;
-      border-radius: 10px;
+    .duvidas-ajuda button {
+      padding: 10px 15px;
+      border-radius: 6px;
       border: none;
-      background-color: #007BFF;
+      background: #28b463;
       color: white;
-      font-weight: bold;
-      font-size: 16px;
       cursor: pointer;
-      transition: background 0.3s, transform 0.2s;
+      transition: background 0.3s;
     }
+    .duvidas-ajuda button:hover { background: #1e8449; }
 
-    button:hover {
-      background-color: #0056b3;
-      transform: translateY(-2px);
+    /* Botão voltar ao topo */
+    #topBtn {
+      display:none;
+      position:fixed;
+      bottom:30px;
+      right:30px;
+      z-index:20;
+      font-size:18px;
+      border:none;
+      outline:none;
+      background-color:#2e86c1;
+      color:white;
+      cursor:pointer;
+      padding:12px 18px;
+      border-radius:50%;
+      box-shadow:0 2px 6px rgba(0,0,0,0.3);
+      transition:background 0.3s;
     }
-
-    /* Ajuste da imagem em telas menores para evitar cortes */
-    @media (max-width: 768px) {
-      body {
-        background-position: center top;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        margin: 30px 10px;
-        width: auto;
-      }
-      h1 {
-        font-size: 20px;
-      }
-      input, button {
-        font-size: 14px;
-      }
-      body {
-        background-position: center top; /* garante visibilidade no celular */
-      }
-    }
+    #topBtn:hover { background-color:#1a5276; }
   </style>
 </head>
 <body>
-  <div class="overlay"></div>
-  <div class="container">
-    <h1>🧑‍✈️ Cadastro de Motoristas</h1>
-    <form>
-      <label for="nome">Nome completo</label>
-      <input type="text" id="nome" name="nome" placeholder="Digite o nome">
 
-      <label for="cpf">CPF</label>
-      <input type="text" id="cpf" name="cpf" placeholder="Digite o CPF">
+  <header>
+    <h1>Motorista - Sistema de Rastreabilidade</h1>
+    <p>Escolha uma opção ou faça seu cadastro</p>
+  </header>
 
-      <label for="telefone">Telefone</label>
-      <input type="text" id="telefone" name="telefone" placeholder="Digite o telefone">
-
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="Digite o email">
-
-      <label for="cnh">CNH (número e categoria)</label>
-      <input type="text" id="cnh" name="cnh" placeholder="Digite CNH">
-
-      <button type="submit">Cadastrar</button>
-    </form>
+  <!-- Menu interno do Motorista -->
+  <div class="menu-motorista">
+    <button onclick="window.location.href='linha.html'">Linhas</button>
+    <button onclick="window.location.href='rota.html'">Rotas</button>
+    <button onclick="window.location.href='onibus.html'">Ônibus</button>
+    <button onclick="window.location.href='rastreabilidade.html'">Rastreabilidade</button>
   </div>
+
+  <!-- Formulário do Motorista -->
+  <section id="cadastro-motorista">
+    <h2>Cadastro de Motorista</h2>
+    <form>
+      <input type="text" placeholder="Nome" required style="width:100%;margin:5px 0;padding:8px;">
+      <input type="text" placeholder="Usuário" required style="width:100%;margin:5px 0;padding:8px;">
+      <input type="password" placeholder="Senha" required style="width:100%;margin:5px 0;padding:8px;">
+      <input type="text" placeholder="Número da CNH" style="width:100%;margin:5px 0;padding:8px;">
+      <input type="text" placeholder="Linha Associada" style="width:100%;margin:5px 0;padding:8px;">
+      <button type="submit" style="margin-top:10px;padding:10px 20px;background:#2e86c1;color:white;border:none;border-radius:6px;cursor:pointer;">Enviar</button>
+    </form>
+  </section>
+
+  <!-- Dúvidas e Ajuda -->
+  <div class="duvidas-ajuda">
+    <button onclick="scrollPara('duvidas')">Dúvidas</button>
+    <button onclick="scrollPara('ajuda')">Ajuda</button>
+  </div>
+
+  <!-- Seções Dúvidas e Ajuda -->
+  <section id="duvidas">
+    <h2>Dúvidas Frequentes</h2>
+    <p>Perguntas comuns e respostas.</p>
+  </section>
+
+  <section id="ajuda">
+    <h2>Ajuda</h2>
+    <p>Suporte e instruções.</p>
+  </section>
+
+  <!-- Botão voltar ao topo -->
+  <button onclick="topFunction()" id="topBtn" title="Voltar ao topo">↑</button>
+
+  <script>
+    // Scroll e botão topo
+    const topBtn = document.getElementById("topBtn");
+    window.onscroll = function(){
+      if(document.body.scrollTop>200 || document.documentElement.scrollTop>200){
+        topBtn.style.display="block";
+      }else{topBtn.style.display="none";}
+    }
+    function topFunction(){window.scrollTo({top:0,behavior:'smooth'});}
+
+    function scrollPara(id){
+      document.getElementById(id).scrollIntoView({behavior:'smooth'});
+    }
+  </script>
+
 </body>
 </html>
