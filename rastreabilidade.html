@@ -99,17 +99,6 @@ function atualizarMapa() {
   mapa.innerHTML = texto;
 }
 
-// Carrega automaticamente a linha selecionada pelo usuário no cadastro
-window.onload = function() {
-  const usuario = JSON.parse(localStorage.getItem('usuario'));
-  if(usuario && usuario.linha){
-    document.getElementById('linha').value = usuario.linha;
-    document.getElementById('rota').value = usuario.rota;
-    document.getElementById('onibus').value = usuario.onibus;
-    atualizarMapa();
-  }
-}
-
 function scrollPara(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
 </script>
 
