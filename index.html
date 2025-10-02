@@ -9,26 +9,28 @@
       margin: 0;
       font-family: Arial, sans-serif;
       color: #fff;
+      background: url('Terminal_de_onibus_Pca.das_Bandeiras_01.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
     }
 
-    /* Fundo geral */
+    /* Sobreposição sem escurecer demais a imagem */
     body::before {
       content: "";
       position: fixed;
       top:0; left:0; right:0; bottom:0;
-      background: rgba(0,0,0,0.4);
+      background: rgba(0,0,0,0.3);
       z-index: -1;
     }
 
     header {
-      background: rgba(0,0,0,0.5);
       text-align: center;
-      padding: 20px;
+      padding: 40px 20px 20px 20px;
       position: relative;
-      z-index: 5;
+      z-index: 2;
     }
 
-    header h1 { margin:0; font-size:28px; }
+    header h1 { margin:0; font-size:32px; }
 
     /* Menu inicial */
     .menu-inicial {
@@ -37,51 +39,29 @@
       gap: 40px;
       margin-top: 50px;
       flex-wrap: wrap;
-      z-index:5;
       position: relative;
+      z-index: 2;
     }
+
     .menu-inicial button {
-      padding: 15px 25px;
-      font-size: 18px;
-      border-radius: 8px;
+      padding: 20px 30px;
+      font-size: 20px;
+      border-radius: 10px;
       border: none;
       cursor: pointer;
       background: #2e86c1;
       color: white;
       transition: background 0.3s;
     }
-    .menu-inicial button:hover { background: #1a5276; }
+    .menu-inicial button:hover { background: #1b4f72; }
 
-    /* Menu lateral inferior direito */
-    .menu-lateral {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      z-index: 10;
-    }
-    .menu-lateral button {
-      padding: 10px 15px;
-      border-radius: 6px;
-      border: none;
-      background: #28b463;
-      color: white;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .menu-lateral button:hover { background: #1e8449; }
-
-    /* Submenus por perfil */
+    /* Submenus internos */
     .submenu {
       display: none;
       justify-content: center;
-      gap: 15px;
+      gap: 20px;
       margin-top: 30px;
       flex-wrap: wrap;
-      z-index: 5;
-      position: relative;
     }
     .submenu button {
       padding: 12px 20px;
@@ -95,33 +75,44 @@
     }
     .submenu button:hover { background: #1b4f72; }
 
-    /* Seções com imagem de fundo específica */
+    /* Seções internas */
     section {
       max-width: 800px;
-      margin: 40px auto;
+      margin: 60px auto;
       padding: 20px;
       border-radius: 8px;
+      background: rgba(255,255,255,0.9);
       color: #333;
-      background-size: cover;
-      background-position: center;
       position: relative;
     }
-    section::before {
-      content:"";
-      position:absolute;
-      top:0; left:0; right:0; bottom:0;
-      background: rgba(255,255,255,0.9);
-      z-index:-1;
-      border-radius:8px;
-    }
 
-    /* Botão Voltar ao Topo */
+    /* Dúvidas e Ajuda */
+    .duvidas-ajuda {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 10;
+    }
+    .duvidas-ajuda button {
+      padding: 10px 15px;
+      border-radius: 6px;
+      border: none;
+      background: #28b463;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .duvidas-ajuda button:hover { background: #1e8449; }
+
+    /* Botão voltar ao topo */
     #topBtn {
       display:none;
       position:fixed;
       bottom:30px;
-      left:50%;
-      transform:translateX(50%);
+      right:30px;
       z-index:20;
       font-size:18px;
       border:none;
@@ -134,30 +125,24 @@
       box-shadow:0 2px 6px rgba(0,0,0,0.3);
       transition:background 0.3s;
     }
-    #topBtn:hover{background-color:#1a5276;}
+    #topBtn:hover { background-color:#1a5276; }
   </style>
 </head>
 <body>
 
   <header>
     <h1>Sistema de Rastreabilidade de Frota</h1>
-    <p>Escolha sua opção</p>
+    <p>Escolha uma opção abaixo</p>
   </header>
 
-  <!-- Menu inicial -->
+  <!-- Menu Inicial -->
   <div class="menu-inicial">
-    <button onclick="selecionarPerfil('funcionario')">Funcionário</button>
-    <button onclick="selecionarPerfil('usuario')">Usuário</button>
+    <button onclick="mostrarSubmenu('funcionario')">Funcionário</button>
+    <button onclick="mostrarSubmenu('usuario')">Usuário</button>
     <button onclick="scrollPara('rastreabilidade')">Rastreabilidade</button>
   </div>
 
-  <!-- Menu lateral inferior direito -->
-  <div class="menu-lateral">
-    <button onclick="scrollPara('duvidas')">Dúvidas</button>
-    <button onclick="scrollPara('ajuda')">Ajuda</button>
-  </div>
-
-  <!-- Submenus -->
+  <!-- Submenus internos -->
   <div id="submenu-funcionario" class="submenu">
     <button onclick="scrollPara('usuario')">Usuário</button>
     <button onclick="scrollPara('motoristas')">Cadastro de Motorista</button>
@@ -170,9 +155,9 @@
     <button onclick="scrollPara('rastreabilidade')">Rastreabilidade</button>
   </div>
 
-  <!-- Seções -->
-  <section id="usuario" style="background:url('usuario-bg.jpg');">
-    <h2>Usuário</h2>
+  <!-- Seções internas -->
+  <section id="usuario">
+    <h2>Formulário de Usuário</h2>
     <form>
       <input type="text" placeholder="Nome do Usuário" required>
       <input type="email" placeholder="E-mail" required>
@@ -181,7 +166,7 @@
     </form>
   </section>
 
-  <section id="motoristas" style="background:url('motorista-bg.jpg');">
+  <section id="motoristas">
     <h2>Cadastro de Motorista</h2>
     <form>
       <input type="text" placeholder="Nome do Motorista" required>
@@ -191,38 +176,43 @@
     </form>
   </section>
 
-  <section id="linhas" style="background:url('linhas-bg.jpg');">
+  <section id="linhas">
     <h2>Linhas</h2>
-    <p>Informações sobre as linhas de ônibus.</p>
+    <p>Informações das linhas de ônibus.</p>
   </section>
 
-  <section id="rotas" style="background:url('rotas-bg.jpg');">
+  <section id="rotas">
     <h2>Rotas</h2>
-    <p>Informações sobre as rotas.</p>
+    <p>Informações das rotas.</p>
   </section>
 
-  <section id="onibus" style="background:url('onibus-bg.jpg');">
+  <section id="onibus">
     <h2>Ônibus</h2>
     <p>Informações sobre os ônibus.</p>
   </section>
 
-  <section id="rastreabilidade" style="background:url('Terminal_de_onibus_Pca.das_Bandeiras_01.jpg');">
+  <section id="rastreabilidade">
     <h2>Rastreabilidade</h2>
-    <p>Aqui você verá o mapa de rastreabilidade da frota.</p>
     <div id="map" style="width:100%;height:400px;background:#ccc;">Mapa Integrado Aqui</div>
   </section>
 
-  <section id="ajuda" style="background:url('ajuda-bg.jpg');">
+  <section id="ajuda">
     <h2>Ajuda</h2>
     <p>Suporte e instruções.</p>
   </section>
 
-  <section id="duvidas" style="background:url('duvidas-bg.jpg');">
+  <section id="duvidas">
     <h2>Dúvidas Frequentes</h2>
     <p>Perguntas comuns e respostas.</p>
   </section>
 
-  <!-- Botão Voltar ao Topo -->
+  <!-- Dúvidas e Ajuda fixos no canto esquerdo -->
+  <div class="duvidas-ajuda">
+    <button onclick="scrollPara('duvidas')">Dúvidas</button>
+    <button onclick="scrollPara('ajuda')">Ajuda</button>
+  </div>
+
+  <!-- Botão voltar ao topo -->
   <button onclick="topFunction()" id="topBtn" title="Voltar ao topo">↑</button>
 
   <script>
@@ -235,8 +225,8 @@
     }
     function topFunction(){window.scrollTo({top:0,behavior:'smooth'});}
 
-    // Selecionar perfil e mostrar submenu
-    function selecionarPerfil(perfil){
+    // Mostrar submenu
+    function mostrarSubmenu(perfil){
       document.getElementById('submenu-funcionario').style.display='none';
       document.getElementById('submenu-usuario').style.display='none';
       if(perfil==='funcionario') document.getElementById('submenu-funcionario').style.display='flex';
@@ -247,5 +237,6 @@
       document.getElementById(id).scrollIntoView({behavior:'smooth'});
     }
   </script>
+
 </body>
 </html>
