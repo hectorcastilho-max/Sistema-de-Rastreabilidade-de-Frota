@@ -31,7 +31,7 @@ button:hover { background:#1b4f72; }
 </header>
 
 <section>
-<form id="formUsuario" action="processa_usuario.php" method="POST">
+<form id="formUsuario">
   <input type="text" id="nome" name="nome" placeholder="Nome" required>
   <input type="email" id="email" name="email" placeholder="E-mail" required>
   <input type="text" id="telefone" name="telefone" placeholder="Telefone">
@@ -40,25 +40,25 @@ button:hover { background:#1b4f72; }
   <label>Linha:</label>
   <select id="linha" name="linha">
     <option value="">--Selecione--</option>
-    <option value="Linha 101">Linha 101</option>
-    <option value="Linha 102">Linha 102</option>
-    <option value="Linha 103">Linha 103</option>
+    <option value="101">Linha 101</option>
+    <option value="102">Linha 102</option>
+    <option value="103">Linha 103</option>
   </select>
 
   <label>Rota:</label>
   <select id="rota" name="rota">
     <option value="">--Selecione--</option>
-    <option value="Rota A">Rota A</option>
-    <option value="Rota B">Rota B</option>
-    <option value="Rota C">Rota C</option>
+    <option value="A">Rota A</option>
+    <option value="B">Rota B</option>
+    <option value="C">Rota C</option>
   </select>
 
   <label>Ônibus:</label>
   <select id="onibus" name="onibus">
     <option value="">--Selecione--</option>
-    <option value="Ônibus 1">Ônibus 1</option>
-    <option value="Ônibus 2">Ônibus 2</option>
-    <option value="Ônibus 3">Ônibus 3</option>
+    <option value="1">Ônibus 1</option>
+    <option value="2">Ônibus 2</option>
+    <option value="3">Ônibus 3</option>
   </select>
 
   <label>Favoritos:</label>
@@ -86,11 +86,10 @@ button:hover { background:#1b4f72; }
 </section>
 
 <script>
-// Preview local do cadastro
 const form = document.getElementById('formUsuario');
+
 form.addEventListener('submit', function(e){
   e.preventDefault();
-  const resumo = document.getElementById('resumo');
   const nome = document.getElementById('nome').value;
   const email = document.getElementById('email').value;
   const telefone = document.getElementById('telefone').value;
@@ -99,13 +98,19 @@ form.addEventListener('submit', function(e){
   const onibus = document.getElementById('onibus').value;
   const favoritos = document.getElementById('favoritos').value;
 
+  // Salva os dados no LocalStorage
+  localStorage.setItem('usuario', JSON.stringify({nome,email,telefone,linha,rota,onibus,favoritos}));
+
+  const resumo = document.getElementById('resumo');
   resumo.innerHTML = `<h3>Cadastro salvo!</h3>
                       <p><strong>Nome:</strong> ${nome}</p>
                       <p><strong>E-mail:</strong> ${email}</p>
                       <p><strong>Telefone:</strong> ${telefone}</p>
                       <p><strong>Transporte:</strong> Linha ${linha}, Rota ${rota}, Ônibus ${onibus}</p>
-                      <p><strong>Favoritos:</strong> ${favoritos}</p>`;
+                      <p><strong>Favoritos:</strong> ${favoritos}</p>
+                      <p>Acesse <a href="rastreabilidade.html">Rastreabilidade</a> para ver sua linha no mapa.</p>`;
 });
+
 function scrollPara(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
 </script>
 
