@@ -2,19 +2,18 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Sistema de Rastreabilidade de Frota</title>
+  <title>Sistema de Rastreabilidade - Página Inicial</title>
   <style>
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      color: #fff;
       background: url('Terminal_de_onibus_Pca.das_Bandeiras_01.jpg') no-repeat center center fixed;
       background-size: cover;
+      color: #fff;
       position: relative;
     }
 
-    /* Sobreposição leve */
     body::before {
       content: "";
       position: fixed;
@@ -25,49 +24,43 @@
 
     header {
       text-align: center;
-      padding: 40px 20px 20px 20px;
-      position: relative;
-      z-index: 2;
+      padding: 60px 20px 20px 20px;
     }
 
-    header h1 { margin:0; font-size:32px; }
+    header h1 {
+      margin:0;
+      font-size:36px;
+    }
 
-    /* Menu inicial */
+    header p {
+      font-size:18px;
+    }
+
     .menu-inicial {
       display: flex;
       justify-content: center;
       gap: 40px;
-      margin-top: 50px;
+      margin-top: 80px;
       flex-wrap: wrap;
-      position: relative;
       z-index: 2;
+      position: relative;
     }
 
     .menu-inicial button {
-      padding: 20px 30px;
+      padding: 25px 40px;
       font-size: 20px;
-      border-radius: 10px;
+      border-radius: 12px;
       border: none;
       cursor: pointer;
       background: #2e86c1;
       color: white;
       transition: background 0.3s;
     }
-    .menu-inicial button:hover { background: #1b4f72; }
-
-    /* Seções internas ocultas por padrão */
-    section {
-      max-width: 800px;
-      margin: 60px auto;
-      padding: 20px;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.9);
-      color: #333;
-      position: relative;
-      display: none;
+    .menu-inicial button:hover {
+      background: #1b4f72;
     }
 
-    /* Dúvidas e Ajuda fixos */
+    /* Dúvidas e Ajuda fixos no canto esquerdo */
     .duvidas-ajuda {
       position: fixed;
       bottom: 30px;
@@ -86,7 +79,9 @@
       cursor: pointer;
       transition: background 0.3s;
     }
-    .duvidas-ajuda button:hover { background: #1e8449; }
+    .duvidas-ajuda button:hover {
+      background: #1e8449;
+    }
 
     /* Botão voltar ao topo */
     #topBtn {
@@ -113,108 +108,52 @@
 
   <header>
     <h1>Sistema de Rastreabilidade de Frota</h1>
-    <p>Escolha uma opção abaixo</p>
+    <p>Escolha uma opção para acessar</p>
   </header>
 
-  <!-- Menu Inicial -->
   <div class="menu-inicial">
-    <button onclick="mostrarSecao('funcionario')">Funcionário</button>
-    <button onclick="mostrarSecao('usuario')">Usuário</button>
-    <button onclick="mostrarSecao('rastreabilidade')">Rastreabilidade</button>
+    <button onclick="window.location.href='motorista.html'">Motorista</button>
+    <button onclick="window.location.href='usuario.html'">Usuário</button>
+    <button onclick="window.location.href='rastreabilidade.html'">Rastreabilidade</button>
   </div>
 
-  <!-- Seções internas -->
-  <section id="usuario">
-    <h2>Seção Usuário</h2>
-    <p>Aqui você terá Linhas, Rotas, Ônibus e Rastreabilidade para usuários.</p>
-  </section>
-
-  <section id="funcionario">
-    <h2>Seção Funcionário</h2>
-    <p>Aqui você terá acesso ao cadastro de Motorista e Usuário.</p>
-  </section>
-
-  <section id="rastreabilidade">
-    <h2>Rastreabilidade</h2>
-    <div id="map" style="width:100%;height:400px;background:#ccc;">Mapa Integrado Aqui</div>
-  </section>
-
-  <section id="linhas">
-    <h2>Linhas</h2>
-    <p>Informações das linhas de ônibus.</p>
-  </section>
-
-  <section id="rotas">
-    <h2>Rotas</h2>
-    <p>Informações das rotas.</p>
-  </section>
-
-  <section id="onibus">
-    <h2>Ônibus</h2>
-    <p>Informações sobre os ônibus.</p>
-  </section>
-
-  <section id="motoristas">
-    <h2>Cadastro de Motorista</h2>
-    <form>
-      <input type="text" placeholder="Nome do Motorista" required>
-      <input type="text" placeholder="Número da CNH" required>
-      <input type="text" placeholder="Linha Associada">
-      <button type="submit">Enviar</button>
-    </form>
-  </section>
-
-  <section id="ajuda">
-    <h2>Ajuda</h2>
-    <p>Suporte e instruções.</p>
-  </section>
-
-  <section id="duvidas">
-    <h2>Dúvidas Frequentes</h2>
-    <p>Perguntas comuns e respostas.</p>
-  </section>
-
-  <!-- Dúvidas e Ajuda fixos no canto esquerdo -->
+  <!-- Dúvidas e Ajuda fixos -->
   <div class="duvidas-ajuda">
     <button onclick="scrollPara('duvidas')">Dúvidas</button>
     <button onclick="scrollPara('ajuda')">Ajuda</button>
   </div>
 
+  <!-- Seções Dúvidas e Ajuda -->
+  <section id="duvidas" style="display:none;">
+    <h2>Dúvidas Frequentes</h2>
+    <p>Perguntas comuns e respostas.</p>
+  </section>
+
+  <section id="ajuda" style="display:none;">
+    <h2>Ajuda</h2>
+    <p>Suporte e instruções.</p>
+  </section>
+
   <!-- Botão voltar ao topo -->
   <button onclick="topFunction()" id="topBtn" title="Voltar ao topo">↑</button>
 
   <script>
-    // Botão voltar ao topo
+    // Scroll e botão topo
     const topBtn = document.getElementById("topBtn");
     window.onscroll = function(){
       if(document.body.scrollTop>200 || document.documentElement.scrollTop>200){
         topBtn.style.display="block";
-      }else{topBtn.style.display="none";}
+      }else{
+        topBtn.style.display="none";
+      }
     }
-    function topFunction(){window.scrollTo({top:0,behavior:'smooth'});}
-
-    // Mostrar apenas a seção correspondente
-    function mostrarSecao(id){
-      const secoes = ['usuario','funcionario','rastreabilidade','linhas','rotas','onibus','motoristas'];
-      secoes.forEach(sec => {
-        document.getElementById(sec).style.display = (sec === id) ? 'block' : 'none';
-      });
-
-      // Se for usuário, mostrar as subseções
-      if(id === 'usuario'){
-        document.getElementById('linhas').style.display = 'block';
-        document.getElementById('rotas').style.display = 'block';
-        document.getElementById('onibus').style.display = 'block';
-      }
-
-      // Se for funcionário, mostrar cadastro de motorista
-      if(id === 'funcionario'){
-        document.getElementById('motoristas').style.display = 'block';
-      }
+    function topFunction(){
+      window.scrollTo({top:0,behavior:'smooth'});
     }
 
     function scrollPara(id){
-      document.getElementById(id).scrollIntoView({behavior:'smooth'});
+      const el = document.getElementById(id);
+      if(el) el.scrollIntoView({behavior:'smooth'});
     }
   </script>
 
