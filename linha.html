@@ -1,77 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Linhas - Sistema de Rastreabilidade</title>
-  <style>
-    html { scroll-behavior: smooth; }
-    body {
-      margin:0;
-      font-family: Arial, sans-serif;
-      background: url('linha-bg.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
-      position: relative;
-    }
-    body::before {
-      content:"";
-      position: fixed;
-      top:0; left:0; right:0; bottom:0;
-      background: rgba(0,0,0,0.3);
-      z-index: -1;
-    }
-    header { text-align:center; padding:30px; }
-    header h1 { margin:0; font-size:28px; }
-    section {
-      max-width: 900px;
-      margin: 30px auto;
-      padding:20px;
-      border-radius:8px;
-      background: rgba(255,255,255,0.9);
-      color:#333;
-    }
-    .duvidas-ajuda {
-      position: fixed;
-      bottom: 30px;
-      left: 30px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      z-index:10;
-    }
-    .duvidas-ajuda button {
-      padding:10px 15px;
-      border-radius:6px;
-      border:none;
-      background:#28b463;
-      color:white;
-      cursor:pointer;
-    }
-    #topBtn {
-      display:none;
-      position:fixed;
-      bottom:30px;
-      right:30px;
-      z-index:20;
-      font-size:18px;
-      border:none;
-      outline:none;
-      background-color:#2e86c1;
-      color:white;
-      cursor:pointer;
-      padding:12px 18px;
-      border-radius:50%;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Linha</title>
+<style>
+body {
+  margin:0; font-family:Arial,sans-serif;
+  background: url('linha-bg.jpg') no-repeat center center fixed;
+  background-size: cover; color:#fff;
+}
+body::before { content:""; position:fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.3); z-index:-1; }
+header { text-align:center; padding:30px;}
+header h1 { margin:0; font-size:28px;}
+.duvidas-ajuda { position:fixed; bottom:30px; right:30px; display:flex; flex-direction:column; gap:10px; }
+.duvidas-ajuda button { padding:10px 15px; border-radius:6px; border:none; background:#28b463; color:white; cursor:pointer; }
+</style>
 </head>
 <body>
-
 <header>
-  <h1>Linhas de Ônibus</h1>
+<h1>Linha</h1>
+<p>Informações sobre as linhas de ônibus</p>
 </header>
 
-<section id="conteudo-linhas">
-  <p>Aqui você pode inserir seu código ou tabela existente de Linhas de ônibus.</p>
+<section>
+<p>Aqui você pode colocar tabela ou informações das linhas.</p>
 </section>
 
 <div class="duvidas-ajuda">
@@ -80,27 +32,17 @@
 </div>
 
 <section id="duvidas">
-  <h2>Dúvidas Frequentes</h2>
-  <p>Perguntas comuns e respostas.</p>
+<h2>Dúvidas Frequentes</h2>
+<p>Perguntas comuns e respostas.</p>
 </section>
 
 <section id="ajuda">
-  <h2>Ajuda</h2>
-  <p>Suporte e instruções.</p>
+<h2>Ajuda</h2>
+<p>Suporte e instruções.</p>
 </section>
 
-<button onclick="topFunction()" id="topBtn">↑</button>
-
 <script>
-const topBtn = document.getElementById("topBtn");
-window.onscroll = function(){
-  if(document.body.scrollTop>200 || document.documentElement.scrollTop>200){
-    topBtn.style.display="block";
-  }else{topBtn.style.display="none";}
-}
-function topFunction(){window.scrollTo({top:0,behavior:'smooth'});}
-function scrollPara(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
+function scrollPara(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'});}
 </script>
-
 </body>
 </html>
