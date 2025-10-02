@@ -14,7 +14,7 @@
       position: relative;
     }
 
-    /* Sobreposição sem escurecer demais a imagem */
+    /* Sobreposição leve */
     body::before {
       content: "";
       position: fixed;
@@ -55,27 +55,7 @@
     }
     .menu-inicial button:hover { background: #1b4f72; }
 
-    /* Submenus internos */
-    .submenu {
-      display: none;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 30px;
-      flex-wrap: wrap;
-    }
-    .submenu button {
-      padding: 12px 20px;
-      border: none;
-      border-radius: 6px;
-      background: #2e86c1;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .submenu button:hover { background: #1b4f72; }
-
-    /* Seções internas */
+    /* Seções internas ocultas por padrão */
     section {
       max-width: 800px;
       margin: 60px auto;
@@ -84,9 +64,10 @@
       background: rgba(255,255,255,0.9);
       color: #333;
       position: relative;
+      display: none;
     }
 
-    /* Dúvidas e Ajuda */
+    /* Dúvidas e Ajuda fixos */
     .duvidas-ajuda {
       position: fixed;
       bottom: 30px;
@@ -137,43 +118,25 @@
 
   <!-- Menu Inicial -->
   <div class="menu-inicial">
-    <button onclick="mostrarSubmenu('funcionario')">Funcionário</button>
-    <button onclick="mostrarSubmenu('usuario')">Usuário</button>
-    <button onclick="scrollPara('rastreabilidade')">Rastreabilidade</button>
-  </div>
-
-  <!-- Submenus internos -->
-  <div id="submenu-funcionario" class="submenu">
-    <button onclick="scrollPara('usuario')">Usuário</button>
-    <button onclick="scrollPara('motoristas')">Cadastro de Motorista</button>
-  </div>
-
-  <div id="submenu-usuario" class="submenu">
-    <button onclick="scrollPara('linhas')">Linhas</button>
-    <button onclick="scrollPara('rotas')">Rotas</button>
-    <button onclick="scrollPara('onibus')">Ônibus</button>
-    <button onclick="scrollPara('rastreabilidade')">Rastreabilidade</button>
+    <button onclick="mostrarSecao('funcionario')">Funcionário</button>
+    <button onclick="mostrarSecao('usuario')">Usuário</button>
+    <button onclick="mostrarSecao('rastreabilidade')">Rastreabilidade</button>
   </div>
 
   <!-- Seções internas -->
   <section id="usuario">
-    <h2>Formulário de Usuário</h2>
-    <form>
-      <input type="text" placeholder="Nome do Usuário" required>
-      <input type="email" placeholder="E-mail" required>
-      <input type="text" placeholder="Telefone">
-      <button type="submit">Enviar</button>
-    </form>
+    <h2>Seção Usuário</h2>
+    <p>Aqui você terá Linhas, Rotas, Ônibus e Rastreabilidade para usuários.</p>
   </section>
 
-  <section id="motoristas">
-    <h2>Cadastro de Motorista</h2>
-    <form>
-      <input type="text" placeholder="Nome do Motorista" required>
-      <input type="text" placeholder="Número da CNH" required>
-      <input type="text" placeholder="Linha Associada">
-      <button type="submit">Enviar</button>
-    </form>
+  <section id="funcionario">
+    <h2>Seção Funcionário</h2>
+    <p>Aqui você terá acesso ao cadastro de Motorista e Usuário.</p>
+  </section>
+
+  <section id="rastreabilidade">
+    <h2>Rastreabilidade</h2>
+    <div id="map" style="width:100%;height:400px;background:#ccc;">Mapa Integrado Aqui</div>
   </section>
 
   <section id="linhas">
@@ -191,9 +154,14 @@
     <p>Informações sobre os ônibus.</p>
   </section>
 
-  <section id="rastreabilidade">
-    <h2>Rastreabilidade</h2>
-    <div id="map" style="width:100%;height:400px;background:#ccc;">Mapa Integrado Aqui</div>
+  <section id="motoristas">
+    <h2>Cadastro de Motorista</h2>
+    <form>
+      <input type="text" placeholder="Nome do Motorista" required>
+      <input type="text" placeholder="Número da CNH" required>
+      <input type="text" placeholder="Linha Associada">
+      <button type="submit">Enviar</button>
+    </form>
   </section>
 
   <section id="ajuda">
@@ -216,7 +184,7 @@
   <button onclick="topFunction()" id="topBtn" title="Voltar ao topo">↑</button>
 
   <script>
-    // Scroll suave e botão topo
+    // Botão voltar ao topo
     const topBtn = document.getElementById("topBtn");
     window.onscroll = function(){
       if(document.body.scrollTop>200 || document.documentElement.scrollTop>200){
@@ -225,12 +193,24 @@
     }
     function topFunction(){window.scrollTo({top:0,behavior:'smooth'});}
 
-    // Mostrar submenu
-    function mostrarSubmenu(perfil){
-      document.getElementById('submenu-funcionario').style.display='none';
-      document.getElementById('submenu-usuario').style.display='none';
-      if(perfil==='funcionario') document.getElementById('submenu-funcionario').style.display='flex';
-      if(perfil==='usuario') document.getElementById('submenu-usuario').style.display='flex';
+    // Mostrar apenas a seção correspondente
+    function mostrarSecao(id){
+      const secoes = ['usuario','funcionario','rastreabilidade','linhas','rotas','onibus','motoristas'];
+      secoes.forEach(sec => {
+        document.getElementById(sec).style.display = (sec === id) ? 'block' : 'none';
+      });
+
+      // Se for usuário, mostrar as subseções
+      if(id === 'usuario'){
+        document.getElementById('linhas').style.display = 'block';
+        document.getElementById('rotas').style.display = 'block';
+        document.getElementById('onibus').style.display = 'block';
+      }
+
+      // Se for funcionário, mostrar cadastro de motorista
+      if(id === 'funcionario'){
+        document.getElementById('motoristas').style.display = 'block';
+      }
     }
 
     function scrollPara(id){
