@@ -24,7 +24,7 @@
       flex-direction: column;
     }
 
-    /* Camada escura por cima do fundo */
+    /* Camada de leve escurecimento — mais transparente agora */
     body::before {
       content: "";
       position: fixed;
@@ -32,17 +32,21 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.6);
+      background-color: rgba(0, 0, 0, 0.35); /* antes era 0.6, agora mais clara */
       z-index: -1;
     }
 
     header {
       text-align: center;
-      padding: 25px 0;
-      background-color: rgba(0, 0, 0, 0.7);
-      font-size: 26px;
+      padding: 18px 0;
+      background-color: rgba(0, 0, 0, 0.6);
+      font-size: 16px; /* reduzido para cerca de 60% do anterior */
       font-weight: bold;
       letter-spacing: 1px;
+    }
+
+    header h1 {
+      font-size: 26px; /* antes estava visualmente perto de 42px */
     }
 
     main {
@@ -55,31 +59,8 @@
       padding: 20px;
     }
 
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 25px;
-      margin-top: 40px;
-    }
-
-    nav a {
-      background-color: rgba(255, 255, 255, 0.15);
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      padding: 15px 35px;
-      border-radius: 10px;
-      font-size: 20px;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-    }
-
-    nav a:hover {
-      background-color: #00bfff;
-      color: #000;
-      transform: scale(1.05);
-      box-shadow: 0 0 20px #00bfff;
+    section {
+      margin-bottom: 30px;
     }
 
     h2 {
@@ -93,6 +74,36 @@
       max-width: 700px;
       line-height: 1.6;
       color: #f1f1f1;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      margin-top: 20px;
+    }
+
+    /* Botões mais contrastantes e legíveis */
+    nav a {
+      background-color: rgba(0, 0, 0, 0.7); /* fundo mais escuro */
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 18px 45px;
+      border-radius: 12px;
+      font-size: 20px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    nav a:hover {
+      background-color: #00bfff;
+      color: #000;
+      transform: scale(1.08);
+      box-shadow: 0 0 25px #00bfff;
+      border-color: #00bfff;
     }
   </style>
 </head>
