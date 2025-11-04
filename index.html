@@ -1,195 +1,96 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Rastreabilidade de Frota</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Rastreabilidade de Frota</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url("img/Terminal_de_onibus_Pca.das_Bandeiras_01.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: white;
+    }
 
-        header {
-            background-color: #004aad;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
+    header {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
 
-        main {
-            padding: 20px;
-            max-width: 900px;
-            margin: auto;
-        }
+    nav {
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 15px 0;
+    }
 
-        section {
-            background-color: white;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
 
-        h2 {
-            color: #004aad;
-        }
+    nav a:hover {
+      color: #00bfff;
+    }
 
-        button {
-            margin-top: 10px;
-            padding: 8px 12px;
-            background-color: #004aad;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    main {
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 30px;
+      max-width: 800px;
+      margin: 40px auto;
+      border-radius: 12px;
+      text-align: center;
+    }
 
-        button:hover {
-            background-color: #003380;
-        }
+    section {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+    }
 
-        .output {
-            margin-top: 10px;
-            background-color: #eaeaea;
-            padding: 10px;
-            border-radius: 5px;
-            max-height: 200px;
-            overflow-y: auto;
-            font-family: monospace;
-        }
+    h2 {
+      color: #00bfff;
+    }
 
-        input {
-            padding: 5px;
-            margin: 5px 0;
-            width: 100%;
-        }
-    </style>
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Sistema de Rastreabilidade de Frota</h1>
-    </header>
+  <header>
+    <h1>Sistema de Rastreabilidade de Frota</h1>
+  </header>
 
-    <main>
-        <!-- Motoristas -->
-        <section>
-            <h2>Motoristas</h2>
-            <input type="text" id="nomeMotorista" placeholder="Nome">
-            <input type="text" id="cpfMotorista" placeholder="CPF">
-            <button onclick="adicionarMotorista()">Adicionar Motorista</button>
-            <div id="saidaMotoristas" class="output"></div>
-        </section>
+  <nav>
+    <a href="motoristas.html">Motoristas</a>
+    <a href="onibus.html">Ônibus</a>
+    <a href="linhas.html">Linhas</a>
+    <a href="rotas.html">Rotas</a>
+    <a href="usuarios.html">Usuários</a>
+    <a href="rastreabilidade.html">Rastreabilidade</a>
+  </nav>
 
-        <!-- Ônibus -->
-        <section>
-            <h2>Ônibus</h2>
-            <input type="text" id="placaOnibus" placeholder="Placa">
-            <input type="number" id="idMotoristaOnibus" placeholder="ID Motorista">
-            <button onclick="adicionarOnibus()">Adicionar Ônibus</button>
-            <div id="saidaOnibus" class="output"></div>
-        </section>
-
-        <!-- Linhas -->
-        <section>
-            <h2>Linhas</h2>
-            <input type="text" id="nomeLinha" placeholder="Nome da Linha">
-            <button onclick="adicionarLinha()">Adicionar Linha</button>
-            <div id="saidaLinhas" class="output"></div>
-        </section>
-
-        <!-- Rotas -->
-        <section>
-            <h2>Rotas</h2>
-            <input type="number" id="linhaRota" placeholder="ID da Linha">
-            <input type="text" id="origemRota" placeholder="Origem">
-            <input type="text" id="destinoRota" placeholder="Destino">
-            <button onclick="adicionarRota()">Adicionar Rota</button>
-            <div id="saidaRotas" class="output"></div>
-        </section>
-
-        <!-- Usuários -->
-        <section>
-            <h2>Usuários</h2>
-            <input type="text" id="nomeUsuario" placeholder="Nome">
-            <input type="email" id="emailUsuario" placeholder="Email">
-            <button onclick="adicionarUsuario()">Adicionar Usuário</button>
-            <div id="saidaUsuarios" class="output"></div>
-        </section>
-
-        <!-- Rastreabilidade -->
-        <section>
-            <h2>Rastreabilidade</h2>
-            <input type="number" id="onibusRastreio" placeholder="ID Ônibus">
-            <input type="number" id="motoristaRastreio" placeholder="ID Motorista">
-            <input type="number" id="rotaRastreio" placeholder="ID Rota">
-            <button onclick="adicionarRastreabilidade()">Adicionar Registro</button>
-            <div id="saidaRastreabilidade" class="output"></div>
-        </section>
-    </main>
-
-    <!-- Scripts JS -->
-    <script src="js/motorista.js"></script>
-    <script src="js/onibus.js"></script>
-    <script src="js/linhas.js"></script>
-    <script src="js/rotas.js"></script>
-    <script src="js/usuario.js"></script>
-    <script src="js/rastreabilidade.js"></script>
-
-    <script>
-        // Funções de interação com o front
-
-        function adicionarMotorista() {
-            const nome = document.getElementById('nomeMotorista').value;
-            const cpf = document.getElementById('cpfMotorista').value;
-            const id = motoristas.length + 1;
-            addMotorista(id, nome, cpf);
-            document.getElementById('saidaMotoristas').textContent = JSON.stringify(motoristas, null, 2);
-        }
-
-        function adicionarOnibus() {
-            const placa = document.getElementById('placaOnibus').value;
-            const motoristaId = Number(document.getElementById('idMotoristaOnibus').value);
-            const id = onibus.length + 1;
-            addOnibus(id, placa, motoristaId);
-            document.getElementById('saidaOnibus').textContent = JSON.stringify(onibus, null, 2);
-        }
-
-        function adicionarLinha() {
-            const nome = document.getElementById('nomeLinha').value;
-            const id = linhas.length + 1;
-            addLinha(id, nome);
-            document.getElementById('saidaLinhas').textContent = JSON.stringify(linhas, null, 2);
-        }
-
-        function adicionarRota() {
-            const linhaId = Number(document.getElementById('linhaRota').value);
-            const origem = document.getElementById('origemRota').value;
-            const destino = document.getElementById('destinoRota').value;
-            const id = rotas.length + 1;
-            addRota(id, linhaId, origem, destino);
-            document.getElementById('saidaRotas').textContent = JSON.stringify(rotas, null, 2);
-        }
-
-        function adicionarUsuario() {
-            const nome = document.getElementById('nomeUsuario').value;
-            const email = document.getElementById('emailUsuario').value;
-            const id = usuarios.length + 1;
-            addUsuario(id, nome, email);
-            document.getElementById('saidaUsuarios').textContent = JSON.stringify(usuarios, null, 2);
-        }
-
-        function adicionarRastreabilidade() {
-            const onibusId = Number(document.getElementById('onibusRastreio').value);
-            const motoristaId = Number(document.getElementById('motoristaRastreio').value);
-            const rotaId = Number(document.getElementById('rotaRastreio').value);
-            const id = rastreabilidade.length + 1;
-            const timestamp = new Date().toLocaleString();
-            addRastreabilidade(id, onibusId, motoristaId, rotaId, timestamp);
-            document.getElementById('saidaRastreabilidade').textContent = JSON.stringify(rastreabilidade, null, 2);
-        }
-    </script>
+  <main>
+    <section>
+      <h2>Bem-vindo!</h2>
+      <p>
+        Este é o painel principal do Sistema de Rastreabilidade de Frota.<br>
+        Escolha um módulo acima para gerenciar motoristas, ônibus, linhas, rotas, usuários ou registros de rastreamento.
+      </p>
+    </section>
+  </main>
 </body>
 </html>
